@@ -31,13 +31,9 @@ source("project_utils.R")
 
 ```{r}
 data <-  read.csv("data\\superbowl-ads.csv")
-rating <-  read.csv("data\\super-bowl-ratings.csv")
+rating <-  read.csv("data\\super-bowl-ratings.csv")[-55,] %>% 
+   mutate(year=year(date))
 general <- read.csv("data\\superbowl-ads-general.csv")
-
-fmt <- "%Y-%m-%d"
-rating[["date"]] <- as.Date(rating[["date"]],fmt)
-dates <- sort(rating[["date"]], decreasing = TRUE)
-
 
 ```
 
@@ -50,26 +46,14 @@ brand_q <- data %>%
   summarise(count = n())
 brand_q
 
-
-
 ```
 
 ```{r}
-brand_name <- "Bud Light"
-brand_history <- data %>% 
-  group_by(brand, year) %>% 
-  filter(brand ==brand_name)
-
-brand_history
+search_dates("Coca-Cola")
 ```
 
 ```{r}
-dates[1]
-time = paste(dates[1], "2021-04-07")
 temp = "2010-01-01 2010-04-03"
-cola_pepsi_trends <- gtrends(c("Doritos", "Budweiser"), geo = "US", time=time)
+cola_pepsi_trends <- gtrends(c("Doritos", "Budweiser"), geo = "US", time=temp)
 plot(cola_pepsi_trends)
-```
-
-```{r}
 ```
