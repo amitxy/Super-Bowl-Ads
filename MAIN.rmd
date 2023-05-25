@@ -34,7 +34,7 @@ data <-  read.csv("data\\superbowl-ads.csv")
 rating <-  read.csv("data\\super-bowl-ratings.csv")[-55,] %>% 
    mutate(year=year(date))
 general <- read.csv("data\\superbowl-ads-general.csv")
-
+fmt <- "%Y-%m-%d"
 ```
 
 ```{r}
@@ -49,11 +49,20 @@ brand_q
 ```
 
 ```{r}
-search_dates("Coca-Cola")
+brand = "Coca-Cola"
+dates = search_dates(brand)
+dates
 ```
 
 ```{r}
-temp = "2010-01-01 2010-04-03"
-cola_pepsi_trends <- gtrends(c("Doritos", "Budweiser"), geo = "US", time=temp)
-plot(cola_pepsi_trends)
+
+year_q = "2018-01-01 2018-12-30"
+month_q = "2018-02-01 2018-03-01"
+date = "2018-02-04"
+year_trends <- gtrends(c(brand), geo = "US", time=year_q)
+month_trands <- gtrends(c(brand), geo = "US", time=month_q)
+
+plot(year_trends)
+plot(month_trands)
+
 ```
