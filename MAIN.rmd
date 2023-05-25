@@ -7,6 +7,8 @@ output: html_document
 library(tidyverse)
 #install.packages("gtrendsR")
 library(gtrendsR)
+#install.packages("alphavantager")
+library("alphavantager")
 source("project_utils.R")
 
 ```
@@ -28,7 +30,19 @@ source("project_utils.R")
 :::
 
 ```{r}
-data = read.csv("data\\superbowl-ads.csv")
+data <-  read.csv("data\\superbowl-ads.csv")
+rating <-  read.csv("data\\super-bowl-ratings.csv")
+general <- read.csv("data\\superbowl-ads-general.csv")
+
+fmt <- "%Y-%m-%d"
+rating[["date"]] <- as.Date(rating[["date"]],fmt)
+dates <- sort(rating[["date"]], decreasing = TRUE)
+
+
+```
+
+```{r}
+
 
 brands = unique(data['brand'])
 brand_q <- data %>%
@@ -36,10 +50,24 @@ brand_q <- data %>%
   summarise(count = n())
 brand_q
 
+
+
 ```
 
 ```{r}
-cola_pepsi_trends <- gtrends(c("Coca-Cola", "Pepsi"), geo = "US", time="today 3-m")
+brand_name <- "Bud Light"
+brand_history <- data %>% 
+  group_by(brand, year) %>% 
+  filter(brand ==brand_name)
+
+brand_history
+```
+
+```{r}
+dates[1]
+time = paste(dates[1], "2021-04-07")
+temp = "2010-01-01 2010-04-03"
+cola_pepsi_trends <- gtrends(c("Doritos", "Budweiser"), geo = "US", time=time)
 plot(cola_pepsi_trends)
 ```
 
