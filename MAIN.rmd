@@ -1,0 +1,35 @@
+---
+title: "Project"
+output: html_document
+---
+
+```{r eval=TRUE, include=FALSE}
+library(tidyverse)
+
+```
+
+```{=html}
+<style>
+    p  {direction: rtl;}
+    h1 {text-align: center;}
+    h2 {direction: rtl;}
+    h4 {direction: rtl;}
+    h3 {direction: rtl;text-decoration: underline;}
+    ol {direction: rtl;}
+    li {direction: rtl;}
+</style>
+```
+<h1><u>מגישים</u></h1>
+
+::: {style="border-bottom:solid"}
+:::
+
+```{r}
+data = read.csv("data\\superbowl-ads.csv")
+
+brands = unique(data['brand'])
+brand_q <- data %>%
+  group_by(brand) %>%
+  summarise(count = n())
+brand_q
+```
