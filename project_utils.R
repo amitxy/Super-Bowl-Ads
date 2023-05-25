@@ -12,7 +12,7 @@ search_dates <- function(brand)
 {
   brand_history <- data %>% 
     group_by(brand, year) %>% 
-    filter(brand ==brand_name)
+    filter(brand ==brand)
   
   r <- rating %>% 
     filter(year %in% brand_history[["year"]])
