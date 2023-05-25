@@ -5,6 +5,9 @@ output: html_document
 
 ```{r eval=TRUE, include=FALSE}
 library(tidyverse)
+#install.packages("gtrendsR")
+library(gtrendsR)
+source("project_utils.R")
 
 ```
 
@@ -32,4 +35,13 @@ brand_q <- data %>%
   group_by(brand) %>%
   summarise(count = n())
 brand_q
+
+```
+
+```{r}
+cola_pepsi_trends <- gtrends(c("Coca-Cola", "Pepsi"), geo = "US", time="today 3-m")
+plot(cola_pepsi_trends)
+```
+
+```{r}
 ```
