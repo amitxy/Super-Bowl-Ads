@@ -15,7 +15,7 @@ rating <- get_rating_data() # contains rating info, e.g., ads cost, viewrs and e
 general <- get_general_data() # ads categories, e.g., beer, car and etc 
 ```
 
-- search_dates
+- <code>search_dates</code>
 
   returns the dates where a brand had ads on the Superbowl
 
@@ -27,7 +27,7 @@ dates[2,]
 
     ## [1] "2005-02-06"
 
-- search_brands
+- <code>search_brands</code>
 
   returns the brands that had a Superbowl ad on the desired year
 
@@ -46,7 +46,7 @@ brands
     ## 5 Pepsi         1
     ## 6 Toyota        1
 
-- gtrands_plot
+- <code>gtrands_plot</code>
 
   Will display the google trands plot, where rday is the “radius” of
   days before and after the ad the you with to observe so following the
