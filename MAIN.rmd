@@ -7,8 +7,7 @@ output: html_document
 library(tidyverse)
 #install.packages("gtrendsR")
 library(gtrendsR)
-#install.packages("alphavantager")
-library("alphavantager")
+#library("docstring")
 source("project_utils.R")
 
 ```
@@ -30,39 +29,24 @@ source("project_utils.R")
 :::
 
 ```{r}
-data <-  read.csv("data\\superbowl-ads.csv")
-rating <-  read.csv("data\\super-bowl-ratings.csv")[-55,] %>% 
-   mutate(year=year(date))
-general <- read.csv("data\\superbowl-ads-general.csv")
 fmt <- "%Y-%m-%d"
+
+data <- get_data() # the main dataset, contains ads info
+rating <- get_rating_data() # contains rating info, e.g., ads cost, viewrs and etc
+general <- get_general_data() # ads categories, e.g., beer, car and etc 
 ```
 
 ```{r}
-
-
 brands = unique(data['brand'])
 brand_q <- data %>%
   group_by(brand) %>%
   summarise(count = n())
-brand_q
+
+ggplot(data=brand_q, aes(x=brand, y=count))+
+  geom_bar(stat = 'identity')
 
 ```
 
 ```{r}
-brand = "Coca-Cola"
-dates = search_dates(brand)
-dates
-```
-
-```{r}
-
-year_q = "2018-01-01 2018-12-30"
-month_q = "2018-02-01 2018-03-01"
-date = "2018-02-04"
-year_trends <- gtrends(c(brand), geo = "US", time=year_q)
-month_trands <- gtrends(c(brand), geo = "US", time=month_q)
-
-plot(year_trends)
-plot(month_trands)
 
 ```
