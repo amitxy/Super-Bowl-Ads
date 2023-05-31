@@ -48,43 +48,5 @@ ggplot(data=brand_q, aes(x=brand, y=count))+
 ```
 
 ```{r}
-brand = "Coca-Cola"
-dates = search_dates(brand)
-dates
-```
 
-```{r}
-
-day = dates[10,]
-month_q = paste(day - 5, day + 5)
-#month_trands <- gtrends(c('doritos', 'Doritos'), geo = "US", time=month_q)
-
-
-#plot(month_trands)
-#plot(gtrends(c(brand, 'Doritos', 'Pepsi'), geo = "US", time=month_q))
-```
-
-```{r}
-
-hits = month_trands$interest_over_time$hits
-date = month_trands$interest_over_time$date
-
-
-ggplot(month_trands$interest_over_time, aes(x=date ,y=hits, colour=keyword)) +
-  geom_line() +
-  geom_vline(xintercept=date[3],linetype = "dashed")
-
-
-```
-
-```{r}
-by_year <- filter(data, year == 2012) %>% .$brand
-by_year
-d<- filter(data, year == 2012)
-
-```
-
-```{r}
-
-gtrends_plot(brands=c('Pepsi', 'Coca-cola'), day, rday=2)
 ```
