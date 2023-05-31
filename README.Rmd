@@ -31,7 +31,7 @@ general <- get_general_data() # ads categories, e.g., beer, car and etc
 ```{r}
 brand <-  "Coca-Cola"
 dates <-  search_dates(brand)
-dates[2,]
+dates
 ```
 
 -   <code>search_brands</code>
