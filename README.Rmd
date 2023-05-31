@@ -84,14 +84,18 @@ plot(gtrends_plot(c("Coca cola", "doritos"), date=dates[2,], 2))
 
 ```{r}
 
-d2 <- gtrends(c("Coca Cola"), geo = "US", time="2005-02-04 2005-02-08", low_search_volume=TRUE, onlyInterest=TRUE)
+d2 <- gtrends(c("Coca Cola"," Doritos"), geo = "US", time="2005-02-04 2005-02-08", low_search_volume=TRUE, onlyInterest=TRUE, gprop = "web")
 plot(d2)
 #gtrends_plot(brands=brand, date="2005-01-30 2005-02-13", rday=1)
 
 ```
 
 ```{r}
-x <- ts_gtrends(keyword = c("Coca cola",), geo = "US", time="2005-02-04 2005-02-08")
+d2
+```
+
+```{r}
+x <- ts_gtrends(keyword = c("Coca cola", "Doritos"), geo = "US", time="2005-02-04 2005-02-08")
 tsbox::ts_plot(x)
 ```
 
