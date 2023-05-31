@@ -52,9 +52,10 @@ search_brands <- function(ad_year)
 gtrends_plot <- function(brands, date, rday=1)
 {
   
-  padding <- ifelse(rday < 7, 10, 0)
+  padding <- ifelse(rday < 7, 0, 0)
   time_q <- paste(date - rday - padding, date + rday + padding)
-  trands <- gtrends(brands, geo = "US", time=time_q)
+  trands <- gtrends(brands, geo = "US", time=time_q,
+                    onlyInterest=TRUE,low_search_volume=TRUE)
   
   hits <-  trands$interest_over_time$hits
   date <-  as.Date(trands$interest_over_time$date)

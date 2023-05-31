@@ -61,3 +61,46 @@ brands_to_compare <- brands[1:3,]$brand # taking 3 companies from the exmaple ab
 gtrends_plot(brands=brands_to_compare, date=dates[2,], rday=1)
 gtrends_plot(brands=brands_to_compare, date=dates[2,], rday=7)
 ```
+
+```{r}
+#remotes::install_github("trendecon/trendecon")
+library(trendecon)
+```
+
+```{r}
+time="2005-01-30 2005-02-13"
+d <- ts_gtrends(
+  keyword = c("Coca cola"),
+  time = "2005-02-01 2005-02-08",
+  geo     = "US"
+)
+d
+plot(value ~ time, data=d, type='l')
+```
+
+```{r}
+plot(gtrends_plot(c("Coca cola", "doritos"), date=dates[2,], 2))
+```
+
+```{r}
+
+d2 <- gtrends(c("Coca Cola"), geo = "US", time="2005-02-04 2005-02-08", low_search_volume=TRUE, onlyInterest=TRUE)
+plot(d2)
+#gtrends_plot(brands=brand, date="2005-01-30 2005-02-13", rday=1)
+
+```
+
+```{r}
+x <- ts_gtrends(keyword = c("Coca cola",), geo = "US", time="2005-02-04 2005-02-08")
+tsbox::ts_plot(x)
+```
+
+```{r}
+data_consistent <- ts_gtrends_mwd(keyword = brand, geo = "US", from="2022-01-30", to=Sys.Date())
+data_consistent
+plot(data_consistent)
+```
+
+```{r}
+
+```
