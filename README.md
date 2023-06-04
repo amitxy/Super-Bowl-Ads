@@ -22,27 +22,16 @@ general <- get_general_data() # ads categories, e.g., beer, car and etc
 ``` r
 brand <-  "Coca-Cola"
 dates <-  search_dates(brand)
-dates
+head(dates)
 ```
 
-    ##          date
-    ## 1  2004-02-01
-    ## 2  2005-02-06
-    ## 3  2006-02-05
-    ## 4  2007-02-04
-    ## 5  2008-02-03
-    ## 6  2009-02-01
-    ## 7  2010-02-07
-    ## 8  2011-02-06
-    ## 9  2012-02-05
-    ## 10 2013-02-03
-    ## 11 2014-02-02
-    ## 12 2015-02-01
-    ## 13 2016-02-07
-    ## 14 2017-02-05
-    ## 15 2018-02-04
-    ## 16 2019-02-03
-    ## 17 2020-02-02
+    ##         date
+    ## 1 2004-02-01
+    ## 2 2005-02-06
+    ## 3 2006-02-05
+    ## 4 2007-02-04
+    ## 5 2008-02-03
+    ## 6 2009-02-01
 
 - <code>search_brands</code>
 
@@ -63,9 +52,9 @@ brands
     ## 5 Pepsi         1
     ## 6 Toyota        1
 
-- <code>gtrands_plot</code>
+- <code>gtrends_plot</code>
 
-  Will display the google trands plot, where rday is the “radius” of
+  Will display the google trends plot, where rday is the “radius” of
   days before and after the ad the you with to observe so following the
   examples above:
 
@@ -98,3 +87,27 @@ gtrends_plot(brands=brands_to_compare, date=dates[2,], rday=7)
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-5-2.png)<!-- -->
+
+- <code>gtrends_topic</code>
+
+  Returns the “RAW” tabular data of gtrends (while converting the brand
+  name to the relevant topic)
+
+``` r
+gtrends_topic(brands=brands_to_compare, date=dates[2,], rday=1)
+```
+
+    ## $interest_over_time
+    ##         date hits   keyword geo                  time gprop category
+    ## 1 2005-02-05   40 Coca-Cola  US 2005-02-05 2005-02-07   web        0
+    ## 2 2005-02-06   37 Coca-Cola  US 2005-02-05 2005-02-07   web        0
+    ## 3 2005-02-07   47 Coca-Cola  US 2005-02-05 2005-02-07   web        0
+    ## 4 2005-02-05   61 Budweiser  US 2005-02-05 2005-02-07   web        0
+    ## 5 2005-02-06   84 Budweiser  US 2005-02-05 2005-02-07   web        0
+    ## 6 2005-02-07  100 Budweiser  US 2005-02-05 2005-02-07   web        0
+    ## 7 2005-02-05   10   Doritos  US 2005-02-05 2005-02-07   web        0
+    ## 8 2005-02-06    0   Doritos  US 2005-02-05 2005-02-07   web        0
+    ## 9 2005-02-07    0   Doritos  US 2005-02-05 2005-02-07   web        0
+    ## 
+    ## attr(,"class")
+    ## [1] "gtrends" "list"
