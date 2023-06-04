@@ -2,6 +2,9 @@ library(tidyverse)
 #library(docstring)
 fmt <- "%Y-%m-%d"
 
+topics <- read.csv("data\\brand_topics.csv")
+
+
 get_data <- function()
 {
   data <- read.csv("data\\superbowl-ads.csv") %>%  filter(year > 2003)
@@ -47,30 +50,56 @@ search_brands <- function(ad_year)
   return(brands)
 }
 
+gtrends_topic <- function(brands, date, rday=1)
+{
+  # the gtrends topics
+  b_topics <-topics$query[topics$brand %in% c(brands)]
+  
+  
+  padding <- 0
+  time_q <- paste(date - rday - padding, date + rday + padding)
+  trends <- gtrends(b_topics,
+                    geo = "US",
+                    time=time_q,
+                    onlyInterest = TRUE,
+                    low_search_volume = FALSE)
+  
+  # changes back from topic query to the brand name
+  trends$interest_over_time$keyword <- sapply(trends$interest_over_time$keyword,
+                                              function(t) topics$brand[topics$query == t])
+  return(trends)
+}
 
 # rday - how many days to display before and after date 
 gtrends_plot <- function(brands, date, rday=1)
 {
+  padding <- 0
+  trends <- gtrends_topic(brands, date, rday)
   
-  padding <- ifelse(rday < 7, 10, 0)
+<<<<<<< Updated upstream
+  padding <- ifelse(rday < 7, 0, 0)
   time_q <- paste(date - rday - padding, date + rday + padding)
-  trands <- gtrends(brands, geo = "US", time=time_q)
+  trands <- gtrends(brands, geo = "US", time=time_q,
+                    onlyInterest=TRUE,low_search_volume=TRUE)
+=======
+  hits <-  trends$interest_over_time$hits
+  date <-  as.Date(trends$interest_over_time$date)
+>>>>>>> Stashed changes
   
-  hits <-  trands$interest_over_time$hits
-  date <-  as.Date(trands$interest_over_time$date)
-  
-  gplot <- ggplot(trands$interest_over_time, aes(x=as.Date(date) ,y=hits, colour=keyword)) +
+  gplot <- ggplot(trends$interest_over_time, aes(x=as.Date(date) ,y=hits, colour=keyword)) +
     geom_line(na.rm = TRUE) +
     geom_vline(xintercept=date[rday + padding + 1],linetype = "dashed") + 
     xlab("Date") +
     ylab("Search hits")
   
-  # To avoid a bug in gtrands package
-  if (padding)
-    gplot + xlim(date[padding + 1], date[padding + 1 + 2*rday])
+  gplot
+  ###Ignore for now ###
+  # To avoid a bug in gtrends package
+  #if (padding)
+    #gplot + xlim(date[padding + 1], date[padding + 1 + 2*rday])
   
-  else
-    gplot
+  #else
+    #gplot
   
 }
 
