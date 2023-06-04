@@ -76,15 +76,8 @@ gtrends_plot <- function(brands, date, rday=1)
   padding <- 0
   trends <- gtrends_topic(brands, date, rday)
   
-<<<<<<< Updated upstream
-  padding <- ifelse(rday < 7, 0, 0)
-  time_q <- paste(date - rday - padding, date + rday + padding)
-  trands <- gtrends(brands, geo = "US", time=time_q,
-                    onlyInterest=TRUE,low_search_volume=TRUE)
-=======
   hits <-  trends$interest_over_time$hits
   date <-  as.Date(trends$interest_over_time$date)
->>>>>>> Stashed changes
   
   gplot <- ggplot(trends$interest_over_time, aes(x=as.Date(date) ,y=hits, colour=keyword)) +
     geom_line(na.rm = TRUE) +
