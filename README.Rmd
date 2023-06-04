@@ -62,58 +62,10 @@ gtrends_plot(brands=brands_to_compare, date=dates[2,], rday=1)
 gtrends_plot(brands=brands_to_compare, date=dates[2,], rday=7)
 ```
 
-<<<<<<< Updated upstream
-```{r}
-#remotes::install_github("trendecon/trendecon")
-library(trendecon)
-```
-
-```{r}
-time="2005-01-30 2005-02-13"
-d <- ts_gtrends(
-  keyword = c("Coca cola"),
-  time = "2005-02-01 2005-02-08",
-  geo     = "US"
-)
-d
-plot(value ~ time, data=d, type='l')
-```
-
-```{r}
-plot(gtrends_plot(c("Coca cola", "doritos"), date=dates[2,], 2))
-```
-
-```{r}
-
-d2 <- gtrends(c("Coca Cola"," Doritos"), geo = "US", time="2005-02-04 2005-02-08", low_search_volume=TRUE, onlyInterest=TRUE, gprop = "web")
-plot(d2)
-#gtrends_plot(brands=brand, date="2005-01-30 2005-02-13", rday=1)
-
-```
-
-```{r}
-d2
-```
-
-```{r}
-x <- ts_gtrends(keyword = c("Coca cola", "Doritos"), geo = "US", time="2005-02-04 2005-02-08")
-tsbox::ts_plot(x)
-```
-
-```{r}
-data_consistent <- ts_gtrends_mwd(keyword = brand, geo = "US", from="2022-01-30", to=Sys.Date())
-data_consistent
-plot(data_consistent)
-```
-
-```{r}
-
-=======
 -   <code>gtrends_topic</code>
 
     Returns the "RAW" tabular data of gtrends (while converting the brand name to the relevant topic)
 
 ```{r}
 gtrends_topic(brands=brands_to_compare, date=dates[2,], rday=1)
->>>>>>> Stashed changes
 ```
