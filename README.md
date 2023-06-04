@@ -8,8 +8,6 @@ README !
 import the datasets:
 
 ``` r
-fmt <- "%Y-%m-%d" 
-
 data <- get_data() # the main dataset, contains ads info
 rating <- get_rating_data() # contains rating info, e.g., ads cost, viewrs and etc
 general <- get_general_data() # ads categories, e.g., beer, car and etc 
