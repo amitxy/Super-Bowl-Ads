@@ -31,7 +31,7 @@ general <- get_general_data() # ads categories, e.g., beer, car and etc
 ```{r}
 brand <-  "Coca-Cola"
 dates <-  search_dates(brand)
-dates
+head(dates)
 ```
 
 -   <code>search_brands</code>
@@ -43,9 +43,9 @@ brands <- search_brands(2015)
 brands
 ```
 
--   <code>gtrands_plot</code>
+-   <code>gtrends_plot</code>
 
-    Will display the google trands plot, where rday is the "radius" of days before and after the ad the you with to observe so following the examples above:
+    Will display the google trends plot, where rday is the "radius" of days before and after the ad the you with to observe so following the examples above:
 
 ```{r}
 gtrends_plot(brands=brand, date=dates[2,], rday=1)
@@ -62,6 +62,7 @@ gtrends_plot(brands=brands_to_compare, date=dates[2,], rday=1)
 gtrends_plot(brands=brands_to_compare, date=dates[2,], rday=7)
 ```
 
+<<<<<<< Updated upstream
 ```{r}
 #remotes::install_github("trendecon/trendecon")
 library(trendecon)
@@ -107,4 +108,12 @@ plot(data_consistent)
 
 ```{r}
 
+=======
+-   <code>gtrends_topic</code>
+
+    Returns the "RAW" tabular data of gtrends (while converting the brand name to the relevant topic)
+
+```{r}
+gtrends_topic(brands=brands_to_compare, date=dates[2,], rday=1)
+>>>>>>> Stashed changes
 ```

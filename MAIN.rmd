@@ -46,7 +46,3 @@ ggplot(data=brand_q, aes(x=brand, y=count))+
   geom_bar(stat = 'identity')
 
 ```
-
-```{r}
-
-```
