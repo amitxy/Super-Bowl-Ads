@@ -46,3 +46,25 @@ ggplot(data=brand_q, aes(x=brand, y=count))+
   geom_bar(stat = 'identity')
 
 ```
+
+```{r}
+
+brand <-  "Coca-Cola"
+dates <-  search_dates(brand)
+date=dates[5,]
+date
+gtopics_plot(brands=brand, date=dates[5,], rday=7)
+d <- gtopics_r(brands=brand, date=dates[5,], rday=7)
+d
+```
+
+```{r}
+mean(filter(d$interest_over_time, date < dates[5,] )$hits)
+mean(filter(d$interest_over_time, date >= dates[5,] )$hits)
+```
+
+```{r}
+
+d$interest_over_time$date
+
+```
