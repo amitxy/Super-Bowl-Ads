@@ -27,11 +27,9 @@ get_general_data <- function()
 }
 
 # Returns the dates where a brand had a commercial  
-search_dates <- function(brand)
+search_dates <- function(brand_name)
 {
-  brand_history <- data %>% 
-    group_by(brand, year) %>% 
-    filter(brand == brand)
+  brand_history <- filter(data, brand == brand_name)
   
   r <- rating %>% 
     filter(year %in% brand_history[["year"]])
@@ -66,7 +64,7 @@ gtopics <- function(brands, time)
   # get rid of the time zone stamp
   trends$interest_over_time$date <- sapply(trends$interest_over_time$date,
                                            function(d) format(d, format = fmt))
-  return(trends)
+  return(trends$interest_over_time)
   
 }
 
@@ -79,12 +77,12 @@ gtopics_r <- function(brands, date, rday=1)
 # rday - how many days to display before and after date 
 gtopics_plot <- function(brands, date, rday=1)
 {
-  trends <- gtrends_topic(brands, date, rday)
+  trends <- gtopics_r(brands, date, rday)
   
-  hits <-  trends$interest_over_time$hits
-  date <-  as.Date(trends$interest_over_time$date)
+  hits <-  trends$hits
+  date <-  as.Date(trends$date)
   
-  gplot <- ggplot(trends$interest_over_time, aes(x=as.Date(date) ,y=hits, colour=keyword)) +
+  gplot <- ggplot(trends, aes(x=as.Date(date) ,y=hits, colour=keyword)) +
     geom_line(na.rm = TRUE) +
     geom_vline(xintercept=date[rday + 1],linetype = "dashed") + 
     xlab("Date") +
