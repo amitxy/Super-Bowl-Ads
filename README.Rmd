@@ -42,13 +42,21 @@ brands <- search_brands(2015)
 brands
 ```
 
--   <code>gtrends_plot</code>
+-   gtopics(brands, time)
+
+    Works just like <code>gtrends</code> (from gtrendsR library) but shows the results for the brand's topic
+
+    ```{r}
+    head(gtopics("Doritos","all"))
+    ```
+
+-   <code>gtopics_plot(brands, date, rday=1)</code>
 
     Will display the google trends plot, where rday is the "radius" of days before and after the ad the you with to observe so following the examples above:
 
 ```{r}
-gtrends_plot(brands=brand, date=dates[2,], rday=1)
-gtrends_plot(brands=brand, date=dates[2,], rday=3)
+gtopics_plot(brands=brand, date=dates[2,], rday=1)
+gtopics_plot(brands=brand, date=dates[2,], rday=3)
 ```
 
 \*The dashed line marks the Superbowl date
@@ -57,14 +65,14 @@ If we want to compare several brands together we can use gtrend_plot as follows:
 
 ```{r}
 brands_to_compare <- brands[1:3,]$brand # taking 3 companies from the exmaple above (Budweiser, Coca-Cola, Doritos)
-gtrends_plot(brands=brands_to_compare, date=dates[2,], rday=1)
-gtrends_plot(brands=brands_to_compare, date=dates[2,], rday=7)
+gtopics_plot(brands=brands_to_compare, date=dates[2,], rday=1)
+gtopics_plot(brands=brands_to_compare, date=dates[2,], rday=7)
 ```
 
--   <code>gtrends_topic</code>
+-   <code>gtopics_r(brands, date, rday=1)</code>
 
     Returns the "RAW" tabular data of gtrends (while converting the brand name to the relevant topic)
 
 ```{r}
-gtrends_topic(brands=brands_to_compare, date=dates[2,], rday=1)
+gtopics_r(brands=brands_to_compare, date=dates[2,], rday=1)
 ```
