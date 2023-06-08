@@ -63,6 +63,9 @@ gtopics <- function(brands, time)
   # changes back from topic query to the brand name
   trends$interest_over_time$keyword <- sapply(trends$interest_over_time$keyword,
                                               function(t) topics$brand[topics$query == t])
+  # get rid of the time zone stamp
+  trends$interest_over_time$date <- sapply(trends$interest_over_time$date,
+                                           function(d) format(d, format = fmt))
   return(trends)
   
 }

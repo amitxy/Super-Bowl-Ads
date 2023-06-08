@@ -46,3 +46,51 @@ ggplot(data=brand_q, aes(x=brand, y=count))+
   geom_bar(stat = 'identity')
 
 ```
+
+```{r}
+
+brand <-  "Doritos"
+dates <-  search_dates(brand)
+```
+
+בדיקה על מותג מסוים בכל שנות הסופרבול
+
+```{r}
+df <- tibble(year=c(as.numeric()), days=c(as.character()), hits=c(as.numeric()))
+
+for (i in seq(nrow(dates)))  
+{
+  output <- gtopics_r(brand, date=dates[i,], rday=3)$interest_over_time
+  hits_before <- mean(filter(output, date < dates[i,] )$hits) 
+  hits_after <- mean(filter(output, date >= dates[i,] )$hits)   
+  
+  temp <- tibble(year=c(year(dates[i,]),year(dates[i,])),
+                                     days=c("Before", "After"),
+                                     hits=c(hits_before, hits_after))
+  df <- df %>% add_row(temp)
+}
+df
+
+
+```
+
+```{r}
+
+ggplot(data=df, aes(x=year, y=hits, fill=days, width=0.8)) +
+  geom_bar(stat="identity", position=position_dodge())+
+  scale_fill_brewer(palette="Paired")+
+  theme_minimal()
+
+```
+
+```{r}
+
+by_month <- gtopics("Doritos","all")$interest_over_time %>%
+  group_by(month=month(date)) %>% 
+  summarise(hits=mean(hits))
+
+ggplot(by_month, aes(x=month,y=hits)) +
+  geom_bar(stat="identity", position=position_dodge())+
+ geom_text(aes(label=round(hits)), vjust=1.6, color="white",
+            position = position_dodge(0.9), size=3.5)
+```
