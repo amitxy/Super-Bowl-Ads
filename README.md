@@ -18,18 +18,18 @@ general <- get_general_data() # ads categories, e.g., beer, car and etc
   returns the dates where a brand had ads on the Superbowl
 
 ``` r
-brand <-  "Coca-Cola"
-dates <-  search_dates(brand)
+brand <- "Coca-Cola"
+dates <- search_dates(brand)
 head(dates)
 ```
 
     ##         date
-    ## 1 2004-02-01
-    ## 2 2005-02-06
-    ## 3 2006-02-05
-    ## 4 2007-02-04
-    ## 5 2008-02-03
-    ## 6 2009-02-01
+    ## 1 2007-02-04
+    ## 2 2008-02-03
+    ## 3 2009-02-01
+    ## 4 2011-02-06
+    ## 5 2012-02-05
+    ## 6 2014-02-02
 
 - <code>search_brands</code>
 
@@ -50,23 +50,40 @@ brands
     ## 5 Pepsi         1
     ## 6 Toyota        1
 
-- <code>gtrends_plot</code>
+- gtopics(brands, time)
+
+  Works just like <code>gtrends</code> (from gtrendsR library) but shows
+  the results for the brand’s topic
+
+  ``` r
+  head(gtopics("Doritos","all")$interest_over_time)
+  ```
+
+      ##         date hits keyword geo time gprop category
+      ## 1 2004-01-01    9 Doritos  US  all   web        0
+      ## 2 2004-02-01    8 Doritos  US  all   web        0
+      ## 3 2004-03-01    7 Doritos  US  all   web        0
+      ## 4 2004-04-01    4 Doritos  US  all   web        0
+      ## 5 2004-05-01    8 Doritos  US  all   web        0
+      ## 6 2004-06-01    7 Doritos  US  all   web        0
+
+- <code>gtopics_plot(brands, date, rday=1)</code>
 
   Will display the google trends plot, where rday is the “radius” of
   days before and after the ad the you with to observe so following the
   examples above:
 
 ``` r
-gtrends_plot(brands=brand, date=dates[2,], rday=1)
+gtopics_plot(brands=brand, date=dates[2,], rday=1)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ``` r
-gtrends_plot(brands=brand, date=dates[2,], rday=3)
+gtopics_plot(brands=brand, date=dates[2,], rday=3)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-4-2.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-5-2.png)<!-- -->
 
 \*The dashed line marks the Superbowl date
 
@@ -75,37 +92,37 @@ follows:
 
 ``` r
 brands_to_compare <- brands[1:3,]$brand # taking 3 companies from the exmaple above (Budweiser, Coca-Cola, Doritos)
-gtrends_plot(brands=brands_to_compare, date=dates[2,], rday=1)
+gtopics_plot(brands=brands_to_compare, date=dates[2,], rday=1)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
-gtrends_plot(brands=brands_to_compare, date=dates[2,], rday=7)
+gtopics_plot(brands=brands_to_compare, date=dates[2,], rday=7)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-5-2.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->
 
-- <code>gtrends_topic</code>
+- <code>gtopics_r(brands, date, rday=1)</code>
 
   Returns the “RAW” tabular data of gtrends (while converting the brand
   name to the relevant topic)
 
 ``` r
-gtrends_topic(brands=brands_to_compare, date=dates[2,], rday=1)
+gtopics_r(brands=brands_to_compare, date=dates[2,], rday=1)
 ```
 
     ## $interest_over_time
     ##         date hits   keyword geo                  time gprop category
-    ## 1 2005-02-05   40 Coca-Cola  US 2005-02-05 2005-02-07   web        0
-    ## 2 2005-02-06   37 Coca-Cola  US 2005-02-05 2005-02-07   web        0
-    ## 3 2005-02-07   47 Coca-Cola  US 2005-02-05 2005-02-07   web        0
-    ## 4 2005-02-05   61 Budweiser  US 2005-02-05 2005-02-07   web        0
-    ## 5 2005-02-06   84 Budweiser  US 2005-02-05 2005-02-07   web        0
-    ## 6 2005-02-07  100 Budweiser  US 2005-02-05 2005-02-07   web        0
-    ## 7 2005-02-05   10   Doritos  US 2005-02-05 2005-02-07   web        0
-    ## 8 2005-02-06    0   Doritos  US 2005-02-05 2005-02-07   web        0
-    ## 9 2005-02-07    0   Doritos  US 2005-02-05 2005-02-07   web        0
+    ## 1 2008-02-02   56 Coca-Cola  US 2008-02-02 2008-02-04   web        0
+    ## 2 2008-02-03   77 Coca-Cola  US 2008-02-02 2008-02-04   web        0
+    ## 3 2008-02-04  100 Coca-Cola  US 2008-02-02 2008-02-04   web        0
+    ## 4 2008-02-02   20 Budweiser  US 2008-02-02 2008-02-04   web        0
+    ## 5 2008-02-03   32 Budweiser  US 2008-02-02 2008-02-04   web        0
+    ## 6 2008-02-04   82 Budweiser  US 2008-02-02 2008-02-04   web        0
+    ## 7 2008-02-02    6   Doritos  US 2008-02-02 2008-02-04   web        0
+    ## 8 2008-02-03   14   Doritos  US 2008-02-02 2008-02-04   web        0
+    ## 9 2008-02-04   78   Doritos  US 2008-02-02 2008-02-04   web        0
     ## 
     ## attr(,"class")
     ## [1] "gtrends" "list"

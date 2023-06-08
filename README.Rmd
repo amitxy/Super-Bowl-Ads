@@ -28,8 +28,8 @@ general <- get_general_data() # ads categories, e.g., beer, car and etc
     returns the dates where a brand had ads on the Superbowl
 
 ```{r}
-brand <-  "Coca-Cola"
-dates <-  search_dates(brand)
+brand <- "Coca-Cola"
+dates <- search_dates(brand)
 head(dates)
 ```
 
@@ -46,7 +46,7 @@ brands
 
     Works just like <code>gtrends</code> (from gtrendsR library) but shows the results for the brand's topic
 
-    ```{r}
+    ```{r message=FALSE, paged.print=TRUE}
     head(gtopics("Doritos","all"))
     ```
 

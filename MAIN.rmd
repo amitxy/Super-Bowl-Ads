@@ -56,11 +56,11 @@ dates <-  search_dates(brand)
 בדיקה על מותג מסוים בכל שנות הסופרבול
 
 ```{r}
-df <- tibble(year=c(as.numeric()), days=c(as.character()), hits=c(as.numeric()))
+df <- tibble(year=c(as.numeric(NA)), days=c(as.character(NA)), hits=c(as.numeric(NA))) %>% na.omit()
 
 for (i in seq(nrow(dates)))  
 {
-  output <- gtopics_r(brand, date=dates[i,], rday=3)$interest_over_time
+  output <- gtopics_r(brand, date=dates[i,], rday=3)
   hits_before <- mean(filter(output, date < dates[i,] )$hits) 
   hits_after <- mean(filter(output, date >= dates[i,] )$hits)   
   
@@ -85,7 +85,7 @@ ggplot(data=df, aes(x=year, y=hits, fill=days, width=0.8)) +
 
 ```{r}
 
-by_month <- gtopics("Doritos","all")$interest_over_time %>%
+by_month <- gtopics("Doritos","all") %>%
   group_by(month=month(date)) %>% 
   summarise(hits=mean(hits))
 
@@ -93,4 +93,48 @@ ggplot(by_month, aes(x=month,y=hits)) +
   geom_bar(stat="identity", position=position_dodge())+
  geom_text(aes(label=round(hits)), vjust=1.6, color="white",
             position = position_dodge(0.9), size=3.5)
+```
+
+```{r}
+all <- gtopics("Coca-Cola","all") %>%
+  group_by(month=month(date))
+
+ba <- c(mean(filter(all,month!=2)$hits),mean(filter(all,month==2)$hits))
+#by_month <- tibble(brand=brand,)
+#ba <- tibble(ON=mean(filter(all,month==2)$hits), OFF=mean(filter(all,month!=2)$hits))
+barplot(c(1,2) ~ round(ba))
+```
+
+```{r}
+by_month <- tibble(hits=as.numeric(NA),type=c(as.character(NA)),brand=c(as.character(NA))) %>%  na.omit()
+by_month
+for (brand in brands$brand) 
+{
+  all <- gtopics(brand,"all") %>%
+  group_by(month=month(date))
+  
+  t <- tibble(brand=c(brand,brand),
+              type=c("NOT Sup month","Sup month"),
+              hits=c(mean(filter(all,month!=2)$hits),mean(filter(all,month==2)$hits)))
+  by_month <- by_month %>% add_row(t)
+}
+
+by_month <- by_month %>% na.omit()
+
+
+            
+```
+
+```{r}
+by_month
+ggplot(data=by_month, aes(x=brand, y=hits, fill=type, width=0.8)) +
+  geom_bar(stat="identity", position=position_dodge())+
+  scale_fill_brewer(palette="Paired")+
+  theme_minimal()
+```
+
+```{r}
+kaki <- gtopics("E-Trade","all")
+kaki <- filter(kaki, hits !='<1')
+plot(hits~ as.Date(date),kaki, type='l')
 ```
