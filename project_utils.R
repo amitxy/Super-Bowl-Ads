@@ -50,17 +50,13 @@ search_brands <- function(ad_year)
   return(brands)
 }
 
-gtrends_topic <- function(brands, date, rday=1)
+gtopics <- function(brands, time)
 {
   # the gtrends topics
-  b_topics <-topics$query[topics$brand %in% c(brands)]
-  
-  
-  padding <- 0
-  time_q <- paste(date - rday - padding, date + rday + padding)
-  trends <- gtrends(b_topics,
+  brands_topics <-topics$query[topics$brand %in% c(brands)]
+  trends <- gtrends(brands_topics,
                     geo = "US",
-                    time=time_q,
+                    time=time,
                     onlyInterest = TRUE,
                     low_search_volume = FALSE)
   
@@ -68,12 +64,18 @@ gtrends_topic <- function(brands, date, rday=1)
   trends$interest_over_time$keyword <- sapply(trends$interest_over_time$keyword,
                                               function(t) topics$brand[topics$query == t])
   return(trends)
+  
+}
+
+gtopics_r <- function(brands, date, rday=1)
+{
+  time_q <- paste(date - rday, date + rday)
+  return(gtopics(brands, time_q))
 }
 
 # rday - how many days to display before and after date 
-gtrends_plot <- function(brands, date, rday=1)
+gtopics_plot <- function(brands, date, rday=1)
 {
-  padding <- 0
   trends <- gtrends_topic(brands, date, rday)
   
   hits <-  trends$interest_over_time$hits
@@ -81,18 +83,10 @@ gtrends_plot <- function(brands, date, rday=1)
   
   gplot <- ggplot(trends$interest_over_time, aes(x=as.Date(date) ,y=hits, colour=keyword)) +
     geom_line(na.rm = TRUE) +
-    geom_vline(xintercept=date[rday + padding + 1],linetype = "dashed") + 
+    geom_vline(xintercept=date[rday + 1],linetype = "dashed") + 
     xlab("Date") +
     ylab("Search hits")
   
   gplot
-  ###Ignore for now ###
-  # To avoid a bug in gtrends package
-  #if (padding)
-    #gplot + xlim(date[padding + 1], date[padding + 1 + 2*rday])
-  
-  #else
-    #gplot
-  
 }
 
