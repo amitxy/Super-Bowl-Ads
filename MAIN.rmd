@@ -113,9 +113,15 @@ for (brand in brands$brand)
   all <- gtopics(brand,"all") %>%
   group_by(month=month(date))
   
+  ad_years <- sapply(search_dates(brand), year)
+  
   t <- tibble(brand=c(brand,brand),
               type=c("NOT Sup month","Sup month"),
-              hits=c(mean(filter(all,month!=2)$hits),mean(filter(all,month==2)$hits)))
+              #hits=c(mean(filter(all,month!=2)$hits),mean(filter(all,month==2)$hits)))
+              hits=c(mean(filter(all,month!=2)$hits),
+                     mean(filter(all,month==2,
+                                 year(date) %in% ad_years)$hits)))
+              
   by_month <- by_month %>% add_row(t)
 }
 
