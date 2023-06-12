@@ -140,37 +140,61 @@ kaki <- gtopics("E-Trade","all")
 plot(hits~ as.Date(date),kaki, type='l')
 ```
 
+על מנת לעבוד בצורה
+
 ```{r}
 
-df <- tibble(date=c(as.numeric(NA)),
+df <- tibble(date=c(as.character(NA)),
              brand=c(as.character(NA)),
              hits=c(as.numeric(NA)), 
              is_sup_week=c(as.numeric(NA))) %>% na.omit()
 
 
-for (y in seq(2014, 2020))
+```
+
+```{r}
+
+update_df <- function(df, brand, rday=3)
 {
-   rday = 3
-   output <- gtopics(brand, time=sprintf("%s-01-01 %s-12-31",y, y))
-   ad_date = search_dates(brand) %>% filter(year(date) == y)
+  for (y in seq(2014, 2020))
+  {
+    
+    output <- gtopics(brand, time=sprintf("%s-01-01 %s-12-31",y, y))
+    ad_date = search_dates(brand) %>% filter(year(date) == y)
    
-   weeks <- rep(FALSE, nrow(output))
-   if (nrow(ad_date))
-   {
-     
-   }
-   sup_weeks <- filter(output, date <= dates[i,] + rday, date >= dates[i,] - rday)
-   not_sup_weeks <-  filter(output, !(date %in% sup_weeks$date))
-   
-   temp <- tibble(date=output$date,
-                 brand=output$keyword,
-                 hits=output$hits,
-                 #### CONTINE
-                 is_sup_week=c(0,1))
-   
-   sup_weeks <- sup_weeks %>% add_row(temp)
+    weeks <- rep(FALSE, nrow(output))
+    if (nrow(ad_date))
+    {
+       weeks <- sapply(output$date,
+                      function (date) {return((date <= ad_date + rday) & (date >= ad_date - rday))})
+    }
   
+   
+      temp <- tibble(date=output$date,
+                    brand=output$keyword, 
+                    hits=output$hits,
+                    is_sup_week=weeks)
+   
+      df <- df %>% add_row(temp)
+    }
+   
+  return(df)
 }
+```
+
+```{r}
+for (brand in brands$brand) {df <- update_df(df, brand)}
+```
+
+```{r}
+by_week <- df %>% 
+  group_by(is_sup_week, brand) %>% 
+  summarise(hits=mean(hits))
+by_week
+ggplot(data=by_week, aes(x=brand, y=hits, fill=as.character(is_sup_week), width=0.8)) +
+  geom_bar(stat="identity", position=position_dodge())+
+  scale_fill_brewer(palette="Paired")+
+  theme_minimal()
 ```
 
 ```{r}
@@ -205,12 +229,15 @@ sup_weeks
 ```
 
 ```{r}
-ggplot(data=df, aes(x=year, y=hits, fill=days, width=0.8)) +
+by_month <- df %>% 
+  group_by(brand, m=month(date)==2) %>% 
+  summarise(hits=mean(hits))
+
+by_month
+ggplot(data=by_month, aes(x=brand, y=hits, fill=m, width=0.8)) +
   geom_bar(stat="identity", position=position_dodge())+
   scale_fill_brewer(palette="Paired")+
-  ggtitle(brand)+
   theme_minimal()
-
 ```
 
 ```{r}
@@ -241,62 +268,16 @@ df
 ```
 
 ```{r}
-samp_dates=sample(seq(as.Date('2005/01/02'), as.Date('2005/12/28'), by="day"), 12)
-output <- c(gtopics_r(brand, date=as.Date(samp_dates[1,]), rday=3))
-for (i in seq(nrow(samp_dates)))  
-{
-  output <- gtopics_r(brand, date=as.Date(samp_dates[i,]), rday=3)
-  print(mean(output$hits))
-}
-#output <- gtopics_r(brand, date=as.Date(samp_dates[1]), rday=3)
-#mean(output$hits)
-output
-mean(output)
-```
-
-```{r}
-p <- gtopics(brand, 'today+5-y') %>% filter(year(date) == 2019, month(date)!=2)
-p2 <- gtopics(brand, 'today+5-y') %>% filter(year(date) == 2019, month(date)==2)
-mean(p$hits)
-```
-
-```{r}
- p <- gtopics(brand, '2016-01-01 2017-01-01')
- p
-```
-
-```{r}
-
-p2 <- filter(p, year(date) == 2016,month(date)==2)
-mean(p2$hits)
-```
-
-```{r}
-rday <- 2
-i = 10
-dates <- search_dates(brand)
-
-#seq(dates[10,] - rday,dates[i,] + rday, by='day')
-#dates[i,]
-
-sup_weeks <- filter(p, date <= dates[i,] + rday, date >= dates[i,] - rday)
-not_sup_weeks <-  filter(p, !(date %in% a$date))
-mean(sup_weeks$hits)
-mean(not_sup_weeks$hits)
-```
-
-```{r}
-hits <- append(p$hits, gtopics(brand, '2020-01-01 2021-01-01')$hits)
-samp <- sample(hits, 80)
+samp <- sample(df$hits, 150)
 qqnorm(samp)
 qqline(samp)
 
+
 ```
 
 ```{r}
-test <- gtopics(brands$brand[1:5], '2022-01-01 2022-12-31')
-t <- gtopics("Hynudai", '2022-01-01 2022-12-31')
+samp <- sample(filter(df, brand=="Kia")$hits, 100)
+qqnorm(samp)
+qqline(samp)
 
-filter(test, keyword == "Hynudai")
-filter(t, keyword == "Hynudai")
 ```
