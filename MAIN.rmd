@@ -264,10 +264,6 @@ df
 ```
 
 ```{r}
-
-```
-
-```{r}
 samp <- sample(df$hits, 150)
 qqnorm(samp)
 qqline(samp)
