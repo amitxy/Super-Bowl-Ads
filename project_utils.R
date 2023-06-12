@@ -56,15 +56,22 @@ gtopics <- function(brands, time)
                     geo = "US",
                     time=time,
                     onlyInterest = TRUE,
-                    low_search_volume = FALSE)
+                    low_search_volume = FALSE)$interest_over_time
   
   # changes back from topic query to the brand name
-  trends$interest_over_time$keyword <- sapply(trends$interest_over_time$keyword,
+  trends$keyword <- sapply(trends$keyword,
                                               function(t) topics$brand[topics$query == t])
   # get rid of the time zone stamp
-  trends$interest_over_time$date <- sapply(trends$interest_over_time$date,
+  trends$date <- sapply(trends$date,
                                            function(d) format(d, format = fmt))
-  return(trends$interest_over_time)
+  # fix noise data
+  if(typeof(trends$hits) == "character")
+  {
+    trends$hits <- replace(trends$hits, trends$hits == '<1', 0.5)
+    trends$hits <- as.numeric(trends$hits)
+  }
+  
+  return(trends)
   
 }
 
