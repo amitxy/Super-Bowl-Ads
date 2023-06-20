@@ -56,7 +56,7 @@ year,brand,superbowl_ads_dot_com_url,youtube_url,funny,show_product_quickly,patr
 2017,Kia,https://superbowl-ads.com/2017-kia-super-bowl-51-li-tv-commercial-heros-journey-starring-melissa-mccarthy/,https://www.youtube.com/watch?v=pVxmT2x3Od4,TRUE,FALSE,FALSE,TRUE,TRUE,TRUE,FALSE,72
 2007,Bud Light,https://superbowl-ads.com/2007-bud-light-but-he-has-bud-light/,https://www.youtube.com/watch?v=qIC90Vnc-OI,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,31
 2011,Bud Light,https://superbowl-ads.com/2011-bud-light-dog-sitter/,https://www.youtube.com/watch?v=JJn1vM7LB1Y,TRUE,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,32
-2016,Pepsi,https://superbowl-ads.com/pepsi-2016-super-bowl-50-ad-joy-pepsi/,https://www.youtube.com/watch?v=B9j4Cw5dkBs,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,
+2016,Pepsi,https://superbowl-ads.com/pepsi-2016-super-bowl-50-ad-joy-pepsi/,https://www.youtube.com/watch?v=B9j4Cw5dkBs,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,30
 2009,Hynudai,https://superbowl-ads.com/2009-hyundai-angry-bosses/,https://www.youtube.com/watch?v=puG0WOgAUfs,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,32
 2011,Coca-Cola,https://superbowl-ads.com/2011-coca-cola-siege/,https://www.youtube.com/watch?v=nAJvHsVoLq0,TRUE,FALSE,FALSE,FALSE,TRUE,TRUE,FALSE,61
 2016,Hynudai,https://superbowl-ads.com/hyundai-2016-super-bowl-50-ad-ryanville/,https://www.youtube.com/watch?v=wBcijELzZi4,TRUE,TRUE,FALSE,TRUE,FALSE,TRUE,TRUE,45
@@ -167,7 +167,7 @@ year,brand,superbowl_ads_dot_com_url,youtube_url,funny,show_product_quickly,patr
 2002,Bud Light,https://superbowl-ads.com/2002-bud-light-satin-sheets/,https://www.youtube.com/watch?v=-LwSb4cCAnw,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,TRUE,32
 2013,Kia,https://superbowl-ads.com/video-2013-kia-super-bowl-xlvii-commercial-space-babies/,https://www.youtube.com/watch?v=k5vbGQb7jR0,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,60
 2008,Pepsi,https://superbowl-ads.com/2008-pepsi-every-sip-with-justin-timberlake/,https://www.youtube.com/watch?v=AKKM8sP24BE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,TRUE,63
-2019,Bud Light,https://superbowl-ads.com/2019-bud-light-special-delivery/,https://www.youtube.com/watch?v=eIlX0Gg0GRI,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,
+2019,Bud Light,https://superbowl-ads.com/2019-bud-light-special-delivery/,https://www.youtube.com/watch?v=eIlX0Gg0GRI,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,60
 2011,Hynudai,https://superbowl-ads.com/2011-hyundai-super-bowl-commercial-anachronistic-city-video/,https://www.youtube.com/watch?v=-BVMOKtawUk,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,30
 2008,Bud Light,https://superbowl-ads.com/2008-bud-light-language-of-love/,https://www.youtube.com/watch?v=Ao0x4zsb724,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,32
 2008,Bud Light,https://superbowl-ads.com/2008-bud-light-jackie-moon-will-ferrell/,https://www.youtube.com/watch?v=ecqiZn2DDFQ,TRUE,TRUE,FALSE,TRUE,FALSE,FALSE,TRUE,31
