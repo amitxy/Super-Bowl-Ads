@@ -318,51 +318,16 @@ hits_not_on_sup <- filter(df, is_sup_week==FALSE)$hits
 t.test(hits_on_sup, alternative = "greater", mu=79)
 t.test(hits_on_sup, sample(hits_not_on_sup, length(hits_on_sup)), alternative = "greater", paired = FALSE, var.equal = 0, mu=25)
 
-#ks.test(df$hits, "punif")
-#t.test()
 ```
 
-testing global normalization algorithm:
-
-```{r eval=FALSE, include=FALSE}
-y = 2017
-brand = "NFL"
-test <- gtopics(brand, sprintf("%s-01-01 %s-12-31",y, y+1))
-#output <- gtopics(brand, time=sprintf("%s-01-01 %s-12-31",2004, 2004))
-d1 <- gtopics(brand, sprintf("%s-01-01 %s-12-31",y, y))
-m_date <- d1 %>% filter(hits==100) %>% .$date
-d2 <- gtopics(brand, sprintf("%s %s-12-31",m_date, y+1))
-d1$hits <- d1$hits * (d2[1,]$hits/100)
-t <- filter(d1, date < m_date) %>% add_row(d2)
-
-
-cmp <- t %>% group_by(chits=filter(test,date==date)$hits) %>% summarise(diff=abs(hits- chits))
-sprintf("Max diff: %f",max(cmp$diff))
-```
-
-```{r eval=FALSE, include=FALSE}
- b = brands[6,]
+```{r}
 ads_cost <- sapply(data$year,
                function (y) { 
-                 # avarage price per 1 second (in USD)
                  return(filter(rating,year==y)$cost_of_30_second_ad_usd)
-                 }) %>% round()
+               })
 
+data <- data %>% mutate(cost= round(duration * (ads_cost / 30)))
 
-data <- data %>% mutate(cost=round(duration/30) * ads_cost)
-
-
-#kaki <- data %>% mutate(cost1=duration* round(ads_cost/30), cost2=round(duration/30) * ads_cost)
-
-kaki <- kaki %>% group_by(brand, year) %>% filter(brand==b) %>% select(brand, year, cost1,cost2)
-
-
-total_cost <- select(kaki,brand, year, cost1,cost2) %>% 
-  summarise(cost1=sum(cost1), cost2=sum(cost2)) %>% 
-  filter(brand==b)
-total_cost
-#kaki <- data %>% mutate(cost=t$cost)
-#kaki <- kaki %>% mutate(money=duration*cost)
 ```
 
 ```{r eval=FALSE, include=FALSE}
@@ -382,8 +347,7 @@ weekk_after_sup <- filter(df, is_sup_week)$date + 7
 ```
 
 ```{r}
-#
-#data <- data %>% mutate(cost=round(duration/30) * ads_cost)
+
 #write.csv(data,"data\\superbowl-ads.csv")
 ```
 
