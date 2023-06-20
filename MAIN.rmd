@@ -319,7 +319,7 @@ sample <- runif(100)
 # Perform a one-sample t-test
 t_test_result <- t.test(sample, mu = 0.5)
 
-# Print the test result
+# Print the test result 1,23
 print(t_test_result)
 ```
 
