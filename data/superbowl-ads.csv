@@ -6,15 +6,15 @@ year,brand,superbowl_ads_dot_com_url,youtube_url,funny,show_product_quickly,patr
 2003,Bud Light,https://superbowl-ads.com/2003-bud-light-hermit-crab/,https://www.youtube.com/watch?v=ovQYgnXHooY,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,TRUE,30
 2020,Toyota,https://superbowl-ads.com/2020-toyota-go-places-with-cobie-smulders/,https://www.youtube.com/watch?v=f34Ji70u3nk,TRUE,TRUE,FALSE,TRUE,TRUE,TRUE,FALSE,68
 2020,Coca-Cola,https://superbowl-ads.com/2020-coca-cola-energy-show-up/,https://www.youtube.com/watch?v=-gAZRN3SCBw,TRUE,FALSE,FALSE,TRUE,FALSE,TRUE,FALSE,60
-2020,Kia,https://superbowl-ads.com/2020-kia-tough-never-quits/,https://www.youtube.com/watch?v=lMs79UXam9A,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,
+2020,Kia,https://superbowl-ads.com/2020-kia-tough-never-quits/,https://www.youtube.com/watch?v=lMs79UXam9A,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,60
 2020,Hynudai,https://superbowl-ads.com/2020-hyundai-smaht-pahk/,https://www.youtube.com/watch?v=WBvkmWDjsYc,TRUE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE,80
 2020,Budweiser,https://superbowl-ads.com/2020-budweiser-typical-american/,https://www.youtube.com/watch?v=J0xugdotpp8,FALSE,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,60
 2010,Hynudai,https://superbowl-ads.com/hd-2010-super-bowl-commercial-new-hyundai-super-bowl-44-xliv-ad-hyundai-body-pass-2011-sonata/,https://www.youtube.com/watch?v=dWQqIeAYfK8,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,32
 2010,Bud Light,https://superbowl-ads.com/hd-exclusive-bud-light-scientist-2010-superbowl-44-xliv-commercial-ad/,https://www.youtube.com/watch?v=agISXMN4tng,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,TRUE,30
 2007,Budweiser,https://superbowl-ads.com/2007-budweiser-king-crab/,https://www.youtube.com/watch?v=7KHlMJE84eA,TRUE,TRUE,FALSE,FALSE,FALSE,TRUE,TRUE,30
 2002,Budweiser,https://superbowl-ads.com/2002-budweiser-ground-zero-clydesdales-bow/,https://www.youtube.com/watch?v=1MZUvib98Rs,FALSE,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,61
-2020,NFL,https://superbowl-ads.com/2020-nfl-next-100/,https://www.youtube.com/watch?v=lbkafMhmvMo,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,
-2017,NFL,https://superbowl-ads.com/2017-nfl-super-bowl-51-li-tv-commercial-super-bowl-baby-legends/,https://www.youtube.com/watch?v=9csH_Hy-7A4,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,
+2020,NFL,https://superbowl-ads.com/2020-nfl-next-100/,https://www.youtube.com/watch?v=lbkafMhmvMo,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,171
+2017,NFL,https://superbowl-ads.com/2017-nfl-super-bowl-51-li-tv-commercial-super-bowl-baby-legends/,https://www.youtube.com/watch?v=9csH_Hy-7A4,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,30
 2005,Bud Light,https://superbowl-ads.com/2005-bud-light-parrot/,https://www.youtube.com/watch?v=-gTWA5AsTP8,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,TRUE,30
 2009,Pepsi,https://superbowl-ads.com/2009-pepsi-max-im-good/,https://www.youtube.com/watch?v=qUZaSf7T7ig,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,33
 2004,Bud Light,https://superbowl-ads.com/2004-bud-light-frank/,https://www.youtube.com/watch?v=mjN3OY9Eefk,TRUE,TRUE,FALSE,FALSE,FALSE,TRUE,TRUE,30
@@ -41,7 +41,7 @@ year,brand,superbowl_ads_dot_com_url,youtube_url,funny,show_product_quickly,patr
 2004,Pepsi,https://superbowl-ads.com/2004-pepsi-bears-find-food/,https://www.youtube.com/watch?v=GzWUUZRli6s,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,45
 2018,Kia,https://superbowl-ads.com/2018-kia-stinger-steven-tyler-big-game-ad-feel-something-again/,https://www.youtube.com/watch?v=9_dE6Z2HK8I,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,75
 2018,Pepsi,https://superbowl-ads.com/2018_pepsi_this_is_the_pepsi/,https://www.youtube.com/watch?v=0gHYd67OumQ,FALSE,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,86
-2018,NFL,https://superbowl-ads.com/touchdown-celebrations-to-come-nfl-super-bowl-lii-commercial/,https://www.youtube.com/watch?v=KUoD-gPDahw,TRUE,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,
+2018,NFL,https://superbowl-ads.com/touchdown-celebrations-to-come-nfl-super-bowl-lii-commercial/,https://www.youtube.com/watch?v=KUoD-gPDahw,TRUE,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,60
 2010,E-Trade,https://superbowl-ads.com/hd-exclusive-e-trade-baby-tears-2010-superbowl-44-xliv-commercial-ad/,https://www.youtube.com/watch?v=LgiYL1Ry2I8,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,16
 2017,NFL,https://superbowl-ads.com/2017-nfl-super-bowl-51-li-tv-commercial-inside-lines/,https://www.youtube.com/watch?v=pvKBdrx4quA,FALSE,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,60
 2000,E-Trade,https://superbowl-ads.com/2000-etrade-money-out-of-the-wazoo/,https://www.youtube.com/watch?v=oftjwYmlfoA,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,30
@@ -53,7 +53,7 @@ year,brand,superbowl_ads_dot_com_url,youtube_url,funny,show_product_quickly,patr
 2009,Budweiser,https://superbowl-ads.com/2009-budweiser-clydesdale-plays-fetch/,https://www.youtube.com/watch?v=w_ZEGUX4YnI,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,33
 2012,E-Trade,https://superbowl-ads.com/2012-etrade-fatherhood/,https://www.youtube.com/watch?v=fObt1E6Ij_E,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,30
 2019,Bud Light,https://superbowl-ads.com/2019-bud-light-medieval-barbers/,https://www.youtube.com/watch?v=hkSQ2Vr41bM,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,15
-2017,Kia,https://superbowl-ads.com/2017-kia-super-bowl-51-li-tv-commercial-heros-journey-starring-melissa-mccarthy/,https://www.youtube.com/watch?v=pVxmT2x3Od4,TRUE,FALSE,FALSE,TRUE,TRUE,TRUE,FALSE,
+2017,Kia,https://superbowl-ads.com/2017-kia-super-bowl-51-li-tv-commercial-heros-journey-starring-melissa-mccarthy/,https://www.youtube.com/watch?v=pVxmT2x3Od4,TRUE,FALSE,FALSE,TRUE,TRUE,TRUE,FALSE,72
 2007,Bud Light,https://superbowl-ads.com/2007-bud-light-but-he-has-bud-light/,https://www.youtube.com/watch?v=qIC90Vnc-OI,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,31
 2011,Bud Light,https://superbowl-ads.com/2011-bud-light-dog-sitter/,https://www.youtube.com/watch?v=JJn1vM7LB1Y,TRUE,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,32
 2016,Pepsi,https://superbowl-ads.com/pepsi-2016-super-bowl-50-ad-joy-pepsi/,https://www.youtube.com/watch?v=B9j4Cw5dkBs,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,
@@ -64,22 +64,22 @@ year,brand,superbowl_ads_dot_com_url,youtube_url,funny,show_product_quickly,patr
 2010,Doritos,https://superbowl-ads.com/hd-exclusive-doritos-samurai-2010-super-bowl-44-xliv-commercial-ad/,https://www.youtube.com/watch?v=1ww1k7w4WQ8,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,30
 2015,Doritos,https://superbowl-ads.com/2015-doritos-middle-seat/,https://www.youtube.com/watch?v=2JqRXLQYF9o,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,30
 2007,Coca-Cola,https://superbowl-ads.com/2007-coca-cola-video-game/,https://www.youtube.com/watch?v=3Tnm53uXIvg,FALSE,TRUE,TRUE,FALSE,TRUE,TRUE,FALSE,60
-2019,Toyota,https://superbowl-ads.com/2019-toyota-supra-wizard/,https://www.youtube.com/watch?v=ZuBbnZ3UbJw,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,
+2019,Toyota,https://superbowl-ads.com/2019-toyota-supra-wizard/,https://www.youtube.com/watch?v=ZuBbnZ3UbJw,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,60
 2002,Budweiser,https://superbowl-ads.com/2002-budweiser-how-ya-doin/,https://www.youtube.com/watch?v=mhEYXcCB1Qw,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,32
 2014,Coca-Cola,https://superbowl-ads.com/2014-coca-going-all-the-way/,https://www.youtube.com/watch?v=nO-8ZY7p95o,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,60
-2004,Budweiser,https://superbowl-ads.com/2004-budweiser-referee/,https://www.youtube.com/watch?v=uO-E2T1hayU,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,
+2004,Budweiser,https://superbowl-ads.com/2004-budweiser-referee/,https://www.youtube.com/watch?v=uO-E2T1hayU,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,30
 2016,Coca-Cola,https://superbowl-ads.com/coca-cola-mini-2016-super-bowl-50-ad-hulk-vs-ant-man/,https://www.youtube.com/watch?v=sMkGwCw7iv8,TRUE,TRUE,FALSE,TRUE,TRUE,FALSE,FALSE,72
 2015,Budweiser,https://superbowl-ads.com/2015-budweiser-clydesdale-beer-run/,https://www.youtube.com/watch?v=5tso0er4EUI,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,30
 2016,Hynudai,https://superbowl-ads.com/hyundai-2016-super-bowl-50-ad-first-date/,https://www.youtube.com/watch?v=KwUUdl22mkA,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,60
 2001,Bud Light,https://superbowl-ads.com/2001-bud-light-pencil-pusher/,https://www.youtube.com/watch?v=J89vbNUzhIE,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,TRUE,30
 2003,Bud Light,https://superbowl-ads.com/2003-bud-light-strongman/,https://www.youtube.com/watch?v=_cEQ5g6bzdM,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,31
 2000,Bud Light,https://superbowl-ads.com/2000-bud-light-hold-the-door/,https://www.youtube.com/watch?v=M3IV93HwSkc,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,30
-2018,Coca-Cola,https://superbowl-ads.com/2018-coca-cola-super-bowl-ad-wonder-us/,https://www.youtube.com/watch?v=ucCvhK2CZMo,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,
+2018,Coca-Cola,https://superbowl-ads.com/2018-coca-cola-super-bowl-ad-wonder-us/,https://www.youtube.com/watch?v=ucCvhK2CZMo,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,59
 2001,Pepsi,https://superbowl-ads.com/2001-pepsi-subway-miracle/,https://www.youtube.com/watch?v=1nmPv4M8Ps8,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,33
 2014,Doritos,https://superbowl-ads.com/2014-doritos-cowboy-kid/,https://www.youtube.com/watch?v=1X_M47SQF6s,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,37
 2016,Budweiser,https://superbowl-ads.com/budweiser-2016-super-bowl-50-ad-simply-put/,https://www.youtube.com/watch?v=Le_2S2db0Bk,FALSE,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,60
 2004,Budweiser,https://superbowl-ads.com/2004-budweiser-donkey/,https://www.youtube.com/watch?v=pmmsr7PAhWU,FALSE,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,61
-2015,Budweiser,https://superbowl-ads.com/budweiser-2015-super-bowl-xlix-ad-brewed-the-hard-way/,https://www.youtube.com/watch?v=7_EfXuGev24,FALSE,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,
+2015,Budweiser,https://superbowl-ads.com/budweiser-2015-super-bowl-xlix-ad-brewed-the-hard-way/,https://www.youtube.com/watch?v=7_EfXuGev24,FALSE,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,60
 2016,Kia,https://superbowl-ads.com/kia-optima-2016-super-bowl-50-ad-walken-closet/,https://www.youtube.com/watch?v=rBkPXt-OpA4,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,76
 2017,Budweiser,https://superbowl-ads.com/2017-budweiser-super-bowl-51-li-tv-commercial-born-hard-way/,https://www.youtube.com/watch?v=HtBZvl7dIu4,FALSE,FALSE,TRUE,FALSE,TRUE,FALSE,FALSE,60
 2000,Budweiser,https://superbowl-ads.com/2000-budweiser-talking-dog/,,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,30
@@ -87,7 +87,7 @@ year,brand,superbowl_ads_dot_com_url,youtube_url,funny,show_product_quickly,patr
 2015,Doritos,https://superbowl-ads.com/doritos-2015-super-bowl-xlix-ad-when-pigs-fly/,https://www.youtube.com/watch?v=YQo0TfuueaY,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,30
 2004,Toyota,https://superbowl-ads.com/2004-toyota-revenge/,https://www.youtube.com/watch?v=5uLJitPWAXM,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,33
 2016,NFL,https://superbowl-ads.com/nfl-2016-super-bowl-50-ad-super-bowl-babies-choir/,https://www.youtube.com/watch?v=9KqekigARfE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,187
-2017,Hynudai,https://superbowl-ads.com/2017-hyundai-super-bowl-51-li-tv-commercial-better-super-bowl/,https://www.youtube.com/watch?v=KpN6fxOorwE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,
+2017,Hynudai,https://superbowl-ads.com/2017-hyundai-super-bowl-51-li-tv-commercial-better-super-bowl/,https://www.youtube.com/watch?v=KpN6fxOorwE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,96
 2012,Bud Light,https://superbowl-ads.com/2012-bud-light-rescue-dog/,https://www.youtube.com/watch?v=Qr3GJqccGi4,TRUE,TRUE,FALSE,FALSE,FALSE,TRUE,TRUE,61
 2008,Budweiser,https://superbowl-ads.com/2008-budweiser-dalmatian-trains-hank-for-team/,https://www.youtube.com/watch?v=odpagg0jV6I,FALSE,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,60
 2013,Hynudai,https://superbowl-ads.com/video-hyundai-2013-super-bowl-xlvii-ad-santafe-team/,https://www.youtube.com/watch?v=jvm68nEAU7o,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,47
@@ -103,15 +103,15 @@ year,brand,superbowl_ads_dot_com_url,youtube_url,funny,show_product_quickly,patr
 2015,Kia,https://superbowl-ads.com/2015-kia-sorento-the-perfect-getaway-with-pierce-brosnan/,https://www.youtube.com/watch?v=nayeYTmEdYw,TRUE,TRUE,FALSE,TRUE,TRUE,TRUE,TRUE,72
 2014,Budweiser,https://superbowl-ads.com/2014-budweiser-a-heros-welcome/,https://www.youtube.com/watch?v=XxfxB0O9Uuk,FALSE,FALSE,TRUE,FALSE,FALSE,TRUE,FALSE,60
 2007,Bud Light,https://superbowl-ads.com/2007-bud-light-rock-scissors-paper/,https://www.youtube.com/watch?v=kH50-giCeDM,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,30
-2008,Hynudai,https://superbowl-ads.com/2008-hyundai-genesis-luxury/,https://www.youtube.com/watch?v=PsKJUnGEGSs,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,
+2008,Hynudai,https://superbowl-ads.com/2008-hyundai-genesis-luxury/,https://www.youtube.com/watch?v=PsKJUnGEGSs,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,33
 2010,NFL,https://superbowl-ads.com/2010-nfl-best-fans-on-the-planet/,https://www.youtube.com/watch?v=6cMHr8goUgU,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,60
 2005,Pepsi,https://superbowl-ads.com/2005-pepsi-song-in-a-bottle/,https://www.youtube.com/watch?v=vUwROngDC88,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,79
 2018,Budweiser,https://superbowl-ads.com/41891-2/,https://www.youtube.com/watch?v=GNVw5f16GEM,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,60
-2018,Bud Light,https://superbowl-ads.com/bud-light-the-bud-knight/,https://www.youtube.com/watch?v=UizTtcBsNi8,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,
+2018,Bud Light,https://superbowl-ads.com/bud-light-the-bud-knight/,https://www.youtube.com/watch?v=UizTtcBsNi8,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,60
 2004,Bud Light,https://superbowl-ads.com/2004-bud-light-sleigh-ride/,https://www.youtube.com/watch?v=yQ_nU0_R7PE,TRUE,FALSE,FALSE,FALSE,TRUE,TRUE,TRUE,31
 2002,Budweiser,https://superbowl-ads.com/2002-budweiser-anniversary-card/,https://www.youtube.com/watch?v=LnU2T2P1oxA,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,30
 2006,Budweiser,https://superbowl-ads.com/2006-budweiser-stadium-crowd-wave/,https://www.youtube.com/watch?v=4WeAvfP1ikU,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,34
-2014,Bud Light,https://superbowl-ads.com/2014-bud-light-up-for-whatever-2/,https://www.youtube.com/watch?v=PnOW5qj_R6A,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,TRUE,
+2014,Bud Light,https://superbowl-ads.com/2014-bud-light-up-for-whatever-2/,https://www.youtube.com/watch?v=PnOW5qj_R6A,FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,TRUE,61
 2009,Coca-Cola,https://superbowl-ads.com/2009-coca-cola-avatar/,https://www.youtube.com/watch?v=Kwke0LNardc,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,61
 2014,Bud Light,https://superbowl-ads.com/2014-bud-light-up-for-whatever-1/,,TRUE,TRUE,FALSE,TRUE,FALSE,FALSE,TRUE,31
 2003,Bud Light,https://superbowl-ads.com/2003-bud-light-third-arm/,,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,30
@@ -124,7 +124,7 @@ year,brand,superbowl_ads_dot_com_url,youtube_url,funny,show_product_quickly,patr
 2003,Budweiser,https://superbowl-ads.com/2003-budweiser-great-listener/,https://www.youtube.com/watch?v=zx4SnN9HuRw,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,30
 2013,Bud Light,https://superbowl-ads.com/video-bud-light-2013-super-bowl-xlvii-ad-journey/,https://www.youtube.com/watch?v=leptS7k6sLE,TRUE,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,60
 2011,Doritos,https://superbowl-ads.com/2011-doritos-pug-attack/,https://www.youtube.com/watch?v=1A6frF5zfDE,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,30
-2005,Bud Light,https://superbowl-ads.com/2005-bud-light-skydiver/,https://www.youtube.com/watch?v=Y9wyIID8Khs,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,
+2005,Bud Light,https://superbowl-ads.com/2005-bud-light-skydiver/,https://www.youtube.com/watch?v=Y9wyIID8Khs,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,42
 2005,Budweiser,https://superbowl-ads.com/2005-budweiser-tryouts/,,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,29
 2014,Doritos,https://superbowl-ads.com/2014-doritos-time-machine/,https://www.youtube.com/watch?v=Y-P0Hs0ADJY,TRUE,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,30
 2008,Bud Light,https://superbowl-ads.com/2008-bud-light-wine-cheese-party/,https://www.youtube.com/watch?v=aEWtTVaIH0M,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,32
@@ -145,7 +145,7 @@ year,brand,superbowl_ads_dot_com_url,youtube_url,funny,show_product_quickly,patr
 2010,Hynudai,https://superbowl-ads.com/hd-exclusive-2010-super-bowl-xliv-commercial-with-brett-favre-hyundai-commercial/,https://www.youtube.com/watch?v=KqAWv2wCW8I,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,31
 2004,Bud Light,https://superbowl-ads.com/2004-bud-light-paintball/,https://www.youtube.com/watch?v=qbS0gF3YdBg,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,30
 2008,Bud Light,https://superbowl-ads.com/2008-bud-light-x-ray-vision/,https://www.youtube.com/watch?v=cOEMI8HRhlA,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,32
-2016,Toyota,https://superbowl-ads.com/pokemon-2016-super-bowl-50-ad-20-years-2/,https://www.youtube.com/watch?v=KLkQ9c9-QFI,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,
+2016,Toyota,https://superbowl-ads.com/pokemon-2016-super-bowl-50-ad-20-years-2/,https://www.youtube.com/watch?v=KLkQ9c9-QFI,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,240
 2006,Bud Light,https://superbowl-ads.com/2006-bud-light-magic-fridge/,https://www.youtube.com/watch?v=67dRRrRz2t8,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,31
 2007,Coca-Cola,https://superbowl-ads.com/2007-coca-cola-happiness-factory/,https://www.youtube.com/watch?v=NwZpO6saPxI,FALSE,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,60
 2007,Budweiser,https://superbowl-ads.com/2007-budweiser-dalmatian/,https://www.youtube.com/watch?v=esOPYOeotTU,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,FALSE,60
@@ -155,7 +155,7 @@ year,brand,superbowl_ads_dot_com_url,youtube_url,funny,show_product_quickly,patr
 2009,Coca-Cola,https://superbowl-ads.com/2009-coke-zero-mean-troy/,https://www.youtube.com/watch?v=XKFUcEkIbEg,TRUE,TRUE,FALSE,TRUE,TRUE,FALSE,FALSE,62
 2009,Pepsi,https://superbowl-ads.com/2009-pepsi-anthem/,https://www.youtube.com/watch?v=WIzKwJmYLNs,FALSE,FALSE,TRUE,TRUE,TRUE,FALSE,FALSE,62
 2001,E-Trade,https://superbowl-ads.com/2001-etrade-dot-com-ghost-town/,https://www.youtube.com/watch?v=ONZFkqzuMjI,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,FALSE,30
-2018,Bud Light,https://superbowl-ads.com/bud-light-ye-olde-pep-talk/,https://www.youtube.com/watch?v=xza7T89Lda4,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,
+2018,Bud Light,https://superbowl-ads.com/bud-light-ye-olde-pep-talk/,https://www.youtube.com/watch?v=xza7T89Lda4,TRUE,TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,45
 2015,Doritos,https://superbowl-ads.com/2015-doritos-cheesy-pirates/,,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,TRUE,42
 2010,Kia,https://superbowl-ads.com/hd-exclusive-kias-big-game-commercial-2010-super-bowl-44-xliv-ad/,https://www.youtube.com/watch?v=7q2yVq6fDEg,TRUE,TRUE,FALSE,FALSE,FALSE,TRUE,TRUE,61
 2008,Doritos,https://superbowl-ads.com/2008-doritos-mouse-trap/,https://www.youtube.com/watch?v=h8qgk5tXuUA,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,30
@@ -190,7 +190,7 @@ year,brand,superbowl_ads_dot_com_url,youtube_url,funny,show_product_quickly,patr
 2002,Budweiser,https://superbowl-ads.com/2002-budweiser-tushy/,,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,30
 2010,E-Trade,https://superbowl-ads.com/hd-exclusive-e-trade-baby-first-class-2010-super-bowl-44-xliv-commercial-ad/,https://www.youtube.com/watch?v=tVrE5-eiSNA,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,30
 2003,Bud Light,https://superbowl-ads.com/2003-bud-light-mother-in-law/,https://www.youtube.com/watch?v=RuIXFuwLb2s,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,31
-2018,Toyota,https://superbowl-ads.com/toyota-2018-big-game-ad-one-team/,https://www.youtube.com/watch?v=QwF3ipuNyfc,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,
+2018,Toyota,https://superbowl-ads.com/toyota-2018-big-game-ad-one-team/,https://www.youtube.com/watch?v=QwF3ipuNyfc,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,60
 2003,Budweiser,https://superbowl-ads.com/2003-budweiser-instant-replay/,https://www.youtube.com/watch?v=hM79LTkT7ek,TRUE,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,31
 2013,Budweiser,https://superbowl-ads.com/video-budweiser-2013-super-bowl-xlvii-ad-the-clydesdales-brotherhood/,https://www.youtube.com/watch?v=eJucRz8kYo0,FALSE,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,73
 2010,Budweiser,https://superbowl-ads.com/hd-exclusive-budweiser-body-bridge-2010-super-bowl-44-xliv-commercial-ad/,https://www.youtube.com/watch?v=IQHlA9qKJv4,TRUE,TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,61
