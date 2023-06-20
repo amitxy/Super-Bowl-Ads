@@ -3,6 +3,22 @@ title: "Project"
 output: html_document
 ---
 
+```{r include=FALSE}
+# settings
+knitr::opts_chunk$set(echo = TRUE)
+
+fn_count <<- 0
+rev_fn_count <<- 0
+
+fn <- function(){
+  fn_count <<- fn_count + 1
+  return(sprintf('<sup id="fnref:%d" role="doc-noteref"><a href="#fn:%d" class="footnote" rel="footnote">%d</a></sup>', fn_count, fn_count, fn_count))}
+
+rev_fn <- function() {
+  rev_fn_count <<- rev_fn_count + 1
+  return(sprintf('<a id="fn:%d" href="#fnref:%d" class="reversefootnote" role="doc-backlink">↩</a>',rev_fn_count,rev_fn_count))}
+```
+
 ```{r eval=TRUE, include=FALSE}
 library(tidyverse)
 #install.packages("gtrendsR")
@@ -23,10 +39,30 @@ source("project_utils.R")
     li {direction: rtl;}
 </style>
 ```
+<h1>עמוד שער</h1>
+
 <h1><u>מגישים</u></h1>
 
 ::: {style="border-bottom:solid"}
 :::
+
+<h1><u>תקציר</u></h1>
+
+\*אחרי שנסיים צריך לכתוב\*
+
+<h1><u>מבוא</u></h1>
+
+פרסומות הסופרבול התעלו מעבר לאופי המסחרי שלהן והפכו לאבני בוחן תרבותיות שמושכות מיליוני צופים ברחבי העולם. הפרסומות הללו, שמוצגות במהלך משחק האליפות של ליגת הפוטבול הלאומית, הן חלק מרכזי בתרבות המשחקים האלו. לא רק שהם ידועות בערכן הבידורי ובכוכבים המפורסמים שמשתתפים בהן, אלא שהן גם מעוררות שיחות, יוצרות באזז ומשאירות רושם מתמשך על החברה. אין להכחיש את ההשפעה התרבותית של פרסומות אלו, שכן הן מגיעות לקהל של למעלה מ-100 מיליון צופים מדי שנה, מה שהופך את הסופרבול לאחד מאירועי הטלוויזיה הנצפים ביותר בעולם. הפרסומות הללו הפכו לסמל של צרכנות אמריקאית, יצירתיות ומצוינות פרסומית. רמת העניין ותשומת הלב שאנשים מקדישים לפרסומות המחצית היא יוצאת דופן. הפרסומות הפכו לחלק בלתי נפרד מחוויית הסופרבול. במחקר שנעשה נמצא כי 70 אחוז מהצופים מצפים לפרסומות וכי כמעט אחד מכל ארבעה צופים במשחק במיוחד עבור הפרסומות, ורואים בהן סוג של בידור בדומה למשחק עצמו. פיתוי החברות לפרסם פרסומות שכאלו גובה מחיר משמעותי. מפרסמים מוכנים להשקיע סכומי כסף מופקעים כדי להבטיח מקום במהלך משבצת הזמן הנחשקת הזו, בהתחשב בכמות הצפייה העצומה וההשפעה התרבותית. המחיר של מודעות אלו ממשיך לעלות, כאשר העלות הממוצעת למיקום של 30 שניות במהלך הסופרבול הגיעה לשבעה מיליון דולר בשנים האחרונות. למרות המחיר הגבוה, המחקרים שנעשו עד היום לרוב מצביעים על כך שהפרסומות מייצרות תשואה חיובית ומשפיעות מאוד על פופלאריות החברה המפרסמת. בפרויקט זה, נחקור את הערך הכספי של מודעות אלו, ונבחון את הויראליות שנוצרת בעקבות הפרסומות הללו. על ידי בחינת עלות הפרסומות, אנו שואפים לענות על שתי שאלות מרכזיות:
+
+1.  האם קיימת התאמה בין מחירן של הפרסומות לבין הויראליות שנוצרת בעקבותן.
+
+2.  האם קיימת התאמה בין מחירן של הפרסומות לבין הויראליות שנוצרת בעקבותן.
+
+<h1><u>שיטות</u></h1>
+
+אני כותב פה משהו חכם`r fn()`
+
+<h1><u>תוצאות</u></h1>
 
 ```{r}
 fmt <- "%Y-%m-%d"
@@ -34,6 +70,7 @@ fmt <- "%Y-%m-%d"
 data <- get_data() # the main dataset, contains ads info
 rating <- get_rating_data() # contains rating info, e.g., ads cost, viewrs and etc
 general <- get_general_data() # ads categories, e.g., beer, car and etc 
+df <- read.csv("data\\trends_data.csv")
 ```
 
 ```{r}
@@ -67,7 +104,7 @@ ggplot(by_month, aes(x=month,y=hits)) +
             position = position_dodge(0.9), size=3.5)
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 by_month <- tibble(hits=as.numeric(NA),type=c(as.character(NA)),brand=c(as.character(NA))) %>%  na.omit()
 for (brand in brands$brand) 
 {
@@ -85,21 +122,47 @@ for (brand in brands$brand)
   by_month <- by_month %>% add_row(t)
 }
 
+
 ```
 
 להראות פרדוקס סימפסון על E-trade
 
-```{r}
-by_month
-ggplot(data=by_month, aes(x=brand, y=hits, fill=type, width=0.8)) +
+```{r eval=FALSE, include=FALSE}
+etrade <- gtopics("E-Trade","all") %>%
+  group_by(month=month(date)) %>% 
+  summarise(hits=mean(hits))
+
+ggplot(etrade, aes(x=month,y=hits)) +
   geom_bar(stat="identity", position=position_dodge())+
-  scale_fill_brewer(palette="Paired")+
-  theme_minimal()
+ geom_text(aes(label=round(hits)), vjust=1.6, color="white",
+            position = position_dodge(0.9), size=3.5)
+
+etrade2 <-df %>% filter(brand== "E-Trade") %>% group_by(month=month(date)) %>%
+  summarise(hits=mean(hits))
+
+etrade2
+ggplot(etrade2, aes(x=month,y=hits)) +
+  geom_bar(stat="identity", position=position_dodge())+
+ geom_text(aes(label=round(hits)), vjust=1.6, color="white",
+            position = position_dodge(0.9), size=3.5)
+
+```
+
+```{r eval=FALSE, include=FALSE}
+etrade_by_month <- gtopics("E-trade", "all") %>% 
+  group_by(m=(month(date) == 2) & is_sup_year ) %>% 
+  summarise(hits=mean(hits))
+
+
+ggplot(etrade_by_month, aes(x=m,y=hits)) +
+  geom_bar(stat="identity", position=position_dodge())+
+ geom_text(aes(label=round(hits)), vjust=1.6, color="white",
+            position = position_dodge(0.9), size=3.5)
 ```
 
 על מנת לעבוד בצורה
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 
 df <- tibble(date=c(as.character(NA)),
              brand=c(as.character(NA)),
@@ -110,7 +173,7 @@ df <- tibble(date=c(as.character(NA)),
 
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 
 update_df <- function(df, brand, rday=3)
 { 
@@ -142,8 +205,8 @@ update_df <- function(df, brand, rday=3)
 ```
 
 ```{r}
-for (brand in brands$brand) {df <- update_df(df, brand); Sys.sleep(6)}
-df$date <- as.Date(df$date)
+#for (brand in brands$brand) {df <- update_df(df, brand); Sys.sleep(6)}
+#df$date <- as.Date(df$date)
 ```
 
 ```{r}
@@ -163,7 +226,7 @@ ggplot(data=by_week, aes(x=brand, y=hits, fill=as.character(is_sup_week), width=
 
 not sure about this one (delete ? )
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 brand="Pepsi"
 rday <- 2
 i = 10
@@ -224,7 +287,7 @@ df
 
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 samp <- sample(df$hits, 220)
 samp <- filter(df, is_sup_week==TRUE)$hits
 #samp <- (sample(df$hits, 220) -mean(df$hits))/(sd(df$hits)/sqrt(220))
@@ -245,14 +308,7 @@ qqline(y=df$hits, distribution = function(p) qt(p,9))
 
 ```
 
-```{r}
-samp <- sample(filter(df, brand=="Doritos")$hits, 100)
-qqnorm(samp)
-qqline(samp)
-
-```
-
-```{r}
+```{r eval=FALSE, include=FALSE}
 
 
 hits_on_sup <- filter(df, is_sup_week==TRUE)$hits
@@ -268,7 +324,7 @@ t.test(hits_on_sup, sample(hits_not_on_sup, length(hits_on_sup)), alternative = 
 
 testing global normalization algorithm:
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 y = 2017
 brand = "NFL"
 test <- gtopics(brand, sprintf("%s-01-01 %s-12-31",y, y+1))
@@ -284,7 +340,7 @@ cmp <- t %>% group_by(chits=filter(test,date==date)$hits) %>% summarise(diff=abs
 sprintf("Max diff: %f",max(cmp$diff))
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
  b = brands[6,]
 ads_cost <- sapply(data$year,
                function (y) { 
@@ -294,7 +350,7 @@ ads_cost <- sapply(data$year,
 
 
 data <- data %>% mutate(cost=round(duration/30) * ads_cost)
-write.csv("data\\superbowl-ads.csv")
+
 
 #kaki <- data %>% mutate(cost1=duration* round(ads_cost/30), cost2=round(duration/30) * ads_cost)
 
@@ -309,11 +365,7 @@ total_cost
 #kaki <- kaki %>% mutate(money=duration*cost)
 ```
 
-```{r}
-data[1,]
-```
-
-```{r}
+```{r eval=FALSE, include=FALSE}
 sample <- runif(100)
 
 # Perform a one-sample t-test
@@ -323,13 +375,29 @@ t_test_result <- t.test(sample, mu = 0.5)
 print(t_test_result)
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 #weeks_before_sup <- sapply(filter(df, is_sup_week)$date, function (d) {return(d - 7)})
 week_before_sup <- filter(df, is_sup_week)$date - 7
 weekk_after_sup <- filter(df, is_sup_week)$date + 7
 ```
 
 ```{r}
-data <- data %>% mutate(cost=round(duration/30) * ads_cost)
-write.csv(data,"data\\superbowl-ads.csv")
+#
+#data <- data %>% mutate(cost=round(duration/30) * ads_cost)
+#write.csv(data,"data\\superbowl-ads.csv")
 ```
+
+::: {style="border-bottom:solid"}
+:::
+
+<h1><u>נספחים</u></h1>
+
+::: {.footnotes role="doc-endnotes"}
+<ol>
+
+<li>אתה לא חכם `r rev_fn()`</li>
+
+</ol>
+:::
+
+<h1><u>רפרנסים</u></h1>
