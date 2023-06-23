@@ -356,7 +356,7 @@ weekk_after_sup <- filter(df, is_sup_week)$date + 7
 #    mutate(year=year(date), date=as.Date(date))
 #length(data$cost)
 #length(data$duration)
-#data
+
 #write.csv(data,"data\\superbowl-ads.csv")
 ```
 
