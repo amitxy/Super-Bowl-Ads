@@ -12,7 +12,7 @@ rev_fn_count <<- 0
 
 fn <- function(){
   fn_count <<- fn_count + 1
-  return(sprintf('<sup id="fnref:%d" role="doc-noteref"><a href="#fn:%d" class="footnote" rel="footnote">%d</a></sup>', fn_count, fn_count, fn_count))}
+  return(sprintf('<sup id="fnref:%d" role="doc-noteref"><a href="#fn:%d" class="footnote" rel="footnote">[%d]</a></sup>', fn_count, fn_count, fn_count))}
 
 rev_fn <- function() {
   rev_fn_count <<- rev_fn_count + 1
@@ -58,13 +58,21 @@ source("project_utils.R")
 
 2.  האם קיימת התאמה בין מחירן של הפרסומות לבין הויראליות שנוצרת בעקבותן.
 
+------------------------------------------------------------------------
+
+\newpage
+
 <h1><u>שיטות</u></h1>
 
 אני כותב פה משהו חכם`r fn()`
 
+[^1]גשדכדגכגד
+
+[^1]: וואלה וואלה
+
 <h1><u>תוצאות</u></h1>
 
-```{r}
+```{r getting data}
 fmt <- "%Y-%m-%d"
 
 data <- get_data() # the main dataset, contains ads info
@@ -210,10 +218,6 @@ update_df <- function(df, brand, rday=3)
 ```
 
 ```{r}
-head(df)
-```
-
-```{r}
 by_week <- df %>% 
   group_by(is_sup_week, brand) %>% 
   summarise(hits=mean(hits))
@@ -347,7 +351,12 @@ weekk_after_sup <- filter(df, is_sup_week)$date + 7
 ```
 
 ```{r}
-
+#data <- read.csv("data\\superbowl-ads.csv")# %>%  filter(year > 2003)
+#rating <-  read.csv("data\\super-bowl-ratings.csv")[-55,] %>% 
+#    mutate(year=year(date), date=as.Date(date))
+#length(data$cost)
+#length(data$duration)
+#data
 #write.csv(data,"data\\superbowl-ads.csv")
 ```
 
