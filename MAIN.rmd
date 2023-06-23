@@ -3,6 +3,22 @@ title: "Project"
 output: html_document
 ---
 
+```{r include=FALSE}
+# settings
+knitr::opts_chunk$set(echo = TRUE)
+
+fn_count <<- 0
+rev_fn_count <<- 0
+
+fn <- function(){
+  fn_count <<- fn_count + 1
+  return(sprintf('<sup id="fnref:%d" role="doc-noteref"><a href="#fn:%d" class="footnote" rel="footnote">[%d]</a></sup>', fn_count, fn_count, fn_count))}
+
+rev_fn <- function() {
+  rev_fn_count <<- rev_fn_count + 1
+  return(sprintf('<a id="fn:%d" href="#fnref:%d" class="reversefootnote" role="doc-backlink">↩</a>',rev_fn_count,rev_fn_count))}
+```
+
 ```{r eval=TRUE, include=FALSE}
 library(tidyverse)
 #install.packages("gtrendsR")
@@ -23,17 +39,46 @@ source("project_utils.R")
     li {direction: rtl;}
 </style>
 ```
+<h1>עמוד שער</h1>
+
 <h1><u>מגישים</u></h1>
 
 ::: {style="border-bottom:solid"}
 :::
 
-```{r}
+<h1><u>תקציר</u></h1>
+
+\*אחרי שנסיים צריך לכתוב\*
+
+<h1><u>מבוא</u></h1>
+
+פרסומות הסופרבול התעלו מעבר לאופי המסחרי שלהן והפכו לאבני בוחן תרבותיות שמושכות מיליוני צופים ברחבי העולם. הפרסומות הללו, שמוצגות במהלך משחק האליפות של ליגת הפוטבול הלאומית, הן חלק מרכזי בתרבות המשחקים האלו. לא רק שהם ידועות בערכן הבידורי ובכוכבים המפורסמים שמשתתפים בהן, אלא שהן גם מעוררות שיחות, יוצרות באזז ומשאירות רושם מתמשך על החברה. אין להכחיש את ההשפעה התרבותית של פרסומות אלו, שכן הן מגיעות לקהל של למעלה מ-100 מיליון צופים מדי שנה, מה שהופך את הסופרבול לאחד מאירועי הטלוויזיה הנצפים ביותר בעולם. הפרסומות הללו הפכו לסמל של צרכנות אמריקאית, יצירתיות ומצוינות פרסומית. רמת העניין ותשומת הלב שאנשים מקדישים לפרסומות המחצית היא יוצאת דופן. הפרסומות הפכו לחלק בלתי נפרד מחוויית הסופרבול. במחקר שנעשה נמצא כי 70 אחוז מהצופים מצפים לפרסומות וכי כמעט אחד מכל ארבעה צופים במשחק במיוחד עבור הפרסומות, ורואים בהן סוג של בידור בדומה למשחק עצמו. פיתוי החברות לפרסם פרסומות שכאלו גובה מחיר משמעותי. מפרסמים מוכנים להשקיע סכומי כסף מופקעים כדי להבטיח מקום במהלך משבצת הזמן הנחשקת הזו, בהתחשב בכמות הצפייה העצומה וההשפעה התרבותית. המחיר של מודעות אלו ממשיך לעלות, כאשר העלות הממוצעת למיקום של 30 שניות במהלך הסופרבול הגיעה לשבעה מיליון דולר בשנים האחרונות. למרות המחיר הגבוה, המחקרים שנעשו עד היום לרוב מצביעים על כך שהפרסומות מייצרות תשואה חיובית ומשפיעות מאוד על פופלאריות החברה המפרסמת. בפרויקט זה, נחקור את הערך הכספי של מודעות אלו, ונבחון את הויראליות שנוצרת בעקבות הפרסומות הללו. על ידי בחינת עלות הפרסומות, אנו שואפים לענות על שתי שאלות מרכזיות:
+
+1.  האם קיימת התאמה בין מחירן של הפרסומות לבין הויראליות שנוצרת בעקבותן.
+
+2.  האם קיימת התאמה בין מחירן של הפרסומות לבין הויראליות שנוצרת בעקבותן.
+
+------------------------------------------------------------------------
+
+\newpage
+
+<h1><u>שיטות</u></h1>
+
+אני כותב פה משהו חכם`r fn()`
+
+[^1]גשדכדגכגד
+
+[^1]: וואלה וואלה
+
+<h1><u>תוצאות</u></h1>
+
+```{r getting data}
 fmt <- "%Y-%m-%d"
 
 data <- get_data() # the main dataset, contains ads info
 rating <- get_rating_data() # contains rating info, e.g., ads cost, viewrs and etc
 general <- get_general_data() # ads categories, e.g., beer, car and etc 
+df <- read.csv("data\\trends_data.csv")
 ```
 
 ```{r}
@@ -56,35 +101,6 @@ dates <-  search_dates(brand)
 בדיקה על מותג מסוים בכל שנות הסופרבול
 
 ```{r}
-df <- tibble(year=c(as.numeric(NA)), days=c(as.character(NA)), hits=c(as.numeric(NA))) %>% na.omit()
-
-for (i in seq(nrow(dates)))  
-{
-  output <- gtopics_r(brand, date=dates[i,], rday=3)
-  hits_before <- mean(filter(output, date < dates[i,] )$hits) 
-  hits_after <- mean(filter(output, date >= dates[i,] )$hits)   
-  
-  temp <- tibble(year=c(year(dates[i,]),year(dates[i,])),
-                                     days=c("Before", "After"),
-                                     hits=c(hits_before, hits_after))
-  df <- df %>% add_row(temp)
-}
-df
-
-
-```
-
-```{r}
-
-ggplot(data=df, aes(x=year, y=hits, fill=days, width=0.8)) +
-  geom_bar(stat="identity", position=position_dodge())+
-  scale_fill_brewer(palette="Paired")+
-  ggtitle(brand)+
-  theme_minimal()
-
-```
-
-```{r}
 
 by_month <- gtopics("Doritos","all") %>%
   group_by(month=month(date)) %>% 
@@ -96,17 +112,7 @@ ggplot(by_month, aes(x=month,y=hits)) +
             position = position_dodge(0.9), size=3.5)
 ```
 
-```{r}
-all <- gtopics("Coca-Cola","all") %>%
-  group_by(month=month(date))
-
-ba <- c(mean(filter(all,month!=2)$hits),mean(filter(all,month==2)$hits))
-#by_month <- tibble(brand=brand,)
-#ba <- tibble(ON=mean(filter(all,month==2)$hits), OFF=mean(filter(all,month!=2)$hits))
-barplot(c(1,2) ~ round(ba))
-```
-
-```{r}
+```{r eval=FALSE, include=FALSE}
 by_month <- tibble(hits=as.numeric(NA),type=c(as.character(NA)),brand=c(as.character(NA))) %>%  na.omit()
 for (brand in brands$brand) 
 {
@@ -124,41 +130,63 @@ for (brand in brands$brand)
   by_month <- by_month %>% add_row(t)
 }
 
+
 ```
 
-```{r}
-by_month
-ggplot(data=by_month, aes(x=brand, y=hits, fill=type, width=0.8)) +
+להראות פרדוקס סימפסון על E-trade
+
+```{r eval=FALSE, include=FALSE}
+etrade <- gtopics("E-Trade","all") %>%
+  group_by(month=month(date)) %>% 
+  summarise(hits=mean(hits))
+
+ggplot(etrade, aes(x=month,y=hits)) +
   geom_bar(stat="identity", position=position_dodge())+
-  scale_fill_brewer(palette="Paired")+
-  theme_minimal()
+ geom_text(aes(label=round(hits)), vjust=1.6, color="white",
+            position = position_dodge(0.9), size=3.5)
+
+etrade2 <-df %>% filter(brand== "E-Trade") %>% group_by(month=month(date)) %>%
+  summarise(hits=mean(hits))
+
+etrade2
+ggplot(etrade2, aes(x=month,y=hits)) +
+  geom_bar(stat="identity", position=position_dodge())+
+ geom_text(aes(label=round(hits)), vjust=1.6, color="white",
+            position = position_dodge(0.9), size=3.5)
+
 ```
 
-```{r}
-kaki <- gtopics("E-Trade","all")
-#kaki <- filter(kaki, hits !='<1')
-plot(hits~ as.Date(date),kaki, type='l')
+```{r eval=FALSE, include=FALSE}
+etrade_by_month <- gtopics("E-trade", "all") %>% 
+  group_by(m=(month(date) == 2) & is_sup_year ) %>% 
+  summarise(hits=mean(hits))
+
+
+ggplot(etrade_by_month, aes(x=m,y=hits)) +
+  geom_bar(stat="identity", position=position_dodge())+
+ geom_text(aes(label=round(hits)), vjust=1.6, color="white",
+            position = position_dodge(0.9), size=3.5)
 ```
 
 על מנת לעבוד בצורה
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 
 df <- tibble(date=c(as.character(NA)),
              brand=c(as.character(NA)),
              hits=c(as.numeric(NA)), 
-             is_sup_week=c(as.numeric(NA))) %>% na.omit()
+             is_sup_week=c(as.logical(NA)),
+             is_sup_year=c(as.logical(NA))) %>% na.omit()
 
 
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 
 update_df <- function(df, brand, rday=3)
-{
-  for (y in seq(2014, 2020))
+{ 
+  for (y in seq(2004, 2020))
   {
-    
     output <- gtopics(brand, time=sprintf("%s-01-01 %s-12-31",y, y))
     ad_date = search_dates(brand) %>% filter(year(date) == y)
    
@@ -171,9 +199,11 @@ update_df <- function(df, brand, rday=3)
   
    
       temp <- tibble(date=output$date,
-                    brand=output$keyword, 
-                    hits=output$hits,
-                    is_sup_week=weeks)
+                     brand=output$keyword, 
+                     hits=output$hits,
+                     is_sup_week=weeks,
+                     is_sup_year=rep(as.logical(nrow(ad_date)),nrow(output))
+                    )
    
       df <- df %>% add_row(temp)
     }
@@ -183,7 +213,8 @@ update_df <- function(df, brand, rday=3)
 ```
 
 ```{r}
-for (brand in brands$brand) {df <- update_df(df, brand)}
+#for (brand in brands$brand) {df <- update_df(df, brand); Sys.sleep(6)}
+#df$date <- as.Date(df$date)
 ```
 
 ```{r}
@@ -197,7 +228,9 @@ ggplot(data=by_week, aes(x=brand, y=hits, fill=as.character(is_sup_week), width=
   theme_minimal()
 ```
 
-```{r}
+not sure about this one (delete ? )
+
+```{r eval=FALSE, include=FALSE}
 brand="Pepsi"
 rday <- 2
 i = 10
@@ -230,7 +263,7 @@ sup_weeks
 
 ```{r}
 by_month <- df %>% 
-  group_by(brand, m=month(date)==2) %>% 
+  group_by(brand, m=(month(date) == 2) & is_sup_year ) %>% 
   summarise(hits=mean(hits))
 
 by_month
@@ -238,11 +271,6 @@ ggplot(data=by_month, aes(x=brand, y=hits, fill=m, width=0.8)) +
   geom_bar(stat="identity", position=position_dodge())+
   scale_fill_brewer(palette="Paired")+
   theme_minimal()
-```
-
-```{r}
-mean(filter(df,days == "ALL")$hits)
-filter(df,days == "ALL")
 ```
 
 ```{r}
@@ -263,17 +291,86 @@ df
 
 ```
 
-```{r}
-samp <- sample(df$hits, 150)
+```{r eval=FALSE, include=FALSE}
+samp <- sample(df$hits, 220)
+samp <- filter(df, is_sup_week==TRUE)$hits
+#samp <- (sample(df$hits, 220) -mean(df$hits))/(sd(df$hits)/sqrt(220))
 qqnorm(samp)
 qqline(samp)
+hist(samp, breaks = 11)
 
+
+qqplot(qunif(ppoints(220)),
+       y=df$hits)
+
+qqline(y=df$hits, distribution = function(p) qunif(p))
+
+qqplot(qt(ppoints(100),df=9),
+       y=df$hits)
+
+qqline(y=df$hits, distribution = function(p) qt(p,9))
+
+```
+
+```{r eval=FALSE, include=FALSE}
+
+
+hits_on_sup <- filter(df, is_sup_week==TRUE)$hits
+hits_not_on_sup <- filter(df, is_sup_week==FALSE)$hits
+
+
+t.test(hits_on_sup, alternative = "greater", mu=79)
+t.test(hits_on_sup, sample(hits_not_on_sup, length(hits_on_sup)), alternative = "greater", paired = FALSE, var.equal = 0, mu=25)
 
 ```
 
 ```{r}
-samp <- sample(filter(df, brand=="Kia")$hits, 100)
-qqnorm(samp)
-qqline(samp)
+ads_cost <- sapply(data$year,
+               function (y) { 
+                 return(filter(rating,year==y)$cost_of_30_second_ad_usd)
+               })
+
+data <- data %>% mutate(cost= round(duration * (ads_cost / 30)))
 
 ```
+
+```{r eval=FALSE, include=FALSE}
+sample <- runif(100)
+
+# Perform a one-sample t-test
+t_test_result <- t.test(sample, mu = 0.5)
+
+# Print the test result 1,23
+print(t_test_result)
+```
+
+```{r eval=FALSE, include=FALSE}
+#weeks_before_sup <- sapply(filter(df, is_sup_week)$date, function (d) {return(d - 7)})
+week_before_sup <- filter(df, is_sup_week)$date - 7
+weekk_after_sup <- filter(df, is_sup_week)$date + 7
+```
+
+```{r}
+#data <- read.csv("data\\superbowl-ads.csv")# %>%  filter(year > 2003)
+#rating <-  read.csv("data\\super-bowl-ratings.csv")[-55,] %>% 
+#    mutate(year=year(date), date=as.Date(date))
+#length(data$cost)
+#length(data$duration)
+#data
+#write.csv(data,"data\\superbowl-ads.csv")
+```
+
+::: {style="border-bottom:solid"}
+:::
+
+<h1><u>נספחים</u></h1>
+
+::: {.footnotes role="doc-endnotes"}
+<ol>
+
+<li>אתה לא חכם `r rev_fn()`</li>
+
+</ol>
+:::
+
+<h1><u>רפרנסים</u></h1>
