@@ -133,26 +133,7 @@ for (brand in brands$brand)
 
 ```
 
-להראות פרדוקס סימפסון על E-trade
-
 ```{r eval=FALSE, include=FALSE}
-etrade <- gtopics("E-Trade","all") %>%
-  group_by(month=month(date)) %>% 
-  summarise(hits=mean(hits))
-
-ggplot(etrade, aes(x=month,y=hits)) +
-  geom_bar(stat="identity", position=position_dodge())+
- geom_text(aes(label=round(hits)), vjust=1.6, color="white",
-            position = position_dodge(0.9), size=3.5)
-
-etrade2 <-df %>% filter(brand== "E-Trade") %>% group_by(month=month(date)) %>%
-  summarise(hits=mean(hits))
-
-etrade2
-ggplot(etrade2, aes(x=month,y=hits)) +
-  geom_bar(stat="identity", position=position_dodge())+
- geom_text(aes(label=round(hits)), vjust=1.6, color="white",
-            position = position_dodge(0.9), size=3.5)
 
 ```
 
@@ -206,6 +187,7 @@ update_df <- function(df, brand, rday=3)
                     )
    
       df <- df %>% add_row(temp)
+
     }
    
   return(df)
@@ -214,7 +196,7 @@ update_df <- function(df, brand, rday=3)
 
 ```{r}
 #for (brand in brands$brand) {df <- update_df(df, brand); Sys.sleep(6)}
-#df$date <- as.Date(df$date)
+#df <- as.Date(df$date)
 ```
 
 ```{r}
@@ -226,39 +208,6 @@ ggplot(data=by_week, aes(x=brand, y=hits, fill=as.character(is_sup_week), width=
   geom_bar(stat="identity", position=position_dodge())+
   scale_fill_brewer(palette="Paired")+
   theme_minimal()
-```
-
-not sure about this one (delete ? )
-
-```{r eval=FALSE, include=FALSE}
-brand="Pepsi"
-rday <- 2
-i = 10
-dates <- search_dates(brand)
-
-by_week <- tibble(year=c(as.numeric(NA)),
-             brand=c(as.character(NA)),
-             type=c(as.character(NA)),
-             hits=c(as.numeric(NA)), 
-             is_sup=c(as.numeric(NA))) %>% na.omit()
-
-
-for (i in seq(nrow(dates)))  
-{
-  output <- gtopics_r(brand, date=dates[i,], rday)
-  sup_weeks <- filter(output, date <= dates[i,] + rday, date >= dates[i,] - rday)
-  not_sup_weeks <-  filter(output, !(date %in% sup_weeks$date))
-  
-  temp <- tibble(year=c(year(dates[i,]),year(dates[i,])),
-                 brand=c(brand,brand),
-                 type=c("Not Sup week", "Sup week"),
-                 hits=c(mean(not_sup_weeks$hits), mean(sup_weeks$hits)),
-                 is_sup=c(0,1))
-  
-  sup_weeks <- sup_weeks %>% add_row(temp)
-}
-sup_weeks
-
 ```
 
 ```{r}
@@ -358,6 +307,9 @@ weekk_after_sup <- filter(df, is_sup_week)$date + 7
 
 
 #write.csv(data,"data\\superbowl-ads.csv")
+#write.csv(df,"data\\trends_data.csv", row.names = FALSE)
+
+#df <- df %>% select(-X)
 ```
 
 ::: {style="border-bottom:solid"}
