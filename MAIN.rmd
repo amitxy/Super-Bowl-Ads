@@ -114,7 +114,8 @@ ggplot(by_month, aes(x=month,y=hits)) +
 
 ```{r eval=FALSE, include=FALSE}
 by_month <- tibble(hits=as.numeric(NA),type=c(as.character(NA)),brand=c(as.character(NA))) %>%  na.omit()
-for (brand in brands$brand) 
+
+for (brand in c("E-Trade"))#brands$brand) 
 {
   all <- gtopics(brand,"all") %>%
   group_by(month=month(date))
@@ -133,8 +134,8 @@ for (brand in brands$brand)
 
 ```
 
-```{r eval=FALSE, include=FALSE}
-
+```{r}
+by_month
 ```
 
 ```{r eval=FALSE, include=FALSE}
@@ -222,24 +223,6 @@ ggplot(data=by_month, aes(x=brand, y=hits, fill=m, width=0.8)) +
   theme_minimal()
 ```
 
-```{r}
-samp_dates=sample(seq(as.Date('2016/04/07'), as.Date('2016/12/28'), by="day"), 30)
-brand="Pepsi"
-df <- tibble(year=c(as.numeric(NA)), days=c(as.character(NA)), hits=c(as.numeric(NA))) %>% na.omit()
-
-for (i in seq(length(samp_dates)))  
-{
-  output <- gtopics_r(brand, date=samp_dates[i], rday=2)
-  
-  temp <- tibble(year=2016,
-                                     days='samp',
-                                     hits=mean(output$hits))
-  df <- df %>% add_row(temp)
-}
-df
-
-```
-
 ```{r eval=FALSE, include=FALSE}
 samp <- sample(df$hits, 220)
 samp <- filter(df, is_sup_week==TRUE)$hits
@@ -306,10 +289,11 @@ weekk_after_sup <- filter(df, is_sup_week)$date + 7
 
 
 
-#write.csv(data,"data\\superbowl-ads.csv")
+#
 #write.csv(df,"data\\trends_data.csv", row.names = FALSE)
-
-#df <- df %>% select(-X)
+#data <- read.csv("data\\superbowl-ads.csv")
+#data <- data %>% select(-X)
+#write.csv(data,"data\\superbowl-ads.csv", row.names = FALSE)
 ```
 
 ::: {style="border-bottom:solid"}
