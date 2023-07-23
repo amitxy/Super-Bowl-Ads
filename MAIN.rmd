@@ -52,16 +52,6 @@ source("project_utils.R")
 
 <h1><u>מבוא</u></h1>
 
-פרסומות הסופרבול התעלו מעבר לאופי המסחרי שלהן והפכו לאבני בוחן תרבותיות שמושכות מיליוני צופים ברחבי העולם. הפרסומות הללו, שמוצגות במהלך משחק האליפות של ליגת הפוטבול הלאומית, הן חלק מרכזי בתרבות המשחקים האלו. לא רק שהם ידועות בערכן הבידורי ובכוכבים המפורסמים שמשתתפים בהן, אלא שהן גם מעוררות שיחות, יוצרות באזז ומשאירות רושם מתמשך על החברה. אין להכחיש את ההשפעה התרבותית של פרסומות אלו, שכן הן מגיעות לקהל של למעלה מ-100 מיליון צופים מדי שנה, מה שהופך את הסופרבול לאחד מאירועי הטלוויזיה הנצפים ביותר בעולם. הפרסומות הללו הפכו לסמל של צרכנות אמריקאית, יצירתיות ומצוינות פרסומית. רמת העניין ותשומת הלב שאנשים מקדישים לפרסומות המחצית היא יוצאת דופן. הפרסומות הפכו לחלק בלתי נפרד מחוויית הסופרבול. במחקר שנעשה נמצא כי 70 אחוז מהצופים מצפים לפרסומות וכי כמעט אחד מכל ארבעה צופים במשחק במיוחד עבור הפרסומות, ורואים בהן סוג של בידור בדומה למשחק עצמו. פיתוי החברות לפרסם פרסומות שכאלו גובה מחיר משמעותי. מפרסמים מוכנים להשקיע סכומי כסף מופקעים כדי להבטיח מקום במהלך משבצת הזמן הנחשקת הזו, בהתחשב בכמות הצפייה העצומה וההשפעה התרבותית. המחיר של מודעות אלו ממשיך לעלות, כאשר העלות הממוצעת למיקום של 30 שניות במהלך הסופרבול הגיעה לשבעה מיליון דולר בשנים האחרונות. למרות המחיר הגבוה, המחקרים שנעשו עד היום לרוב מצביעים על כך שהפרסומות מייצרות תשואה חיובית ומשפיעות מאוד על פופלאריות החברה המפרסמת. בפרויקט זה, נחקור את הערך הכספי של מודעות אלו, ונבחון את הויראליות שנוצרת בעקבות הפרסומות הללו. על ידי בחינת עלות הפרסומות, אנו שואפים לענות על שתי שאלות מרכזיות:
-
-1.  האם קיימת התאמה בין מחירן של הפרסומות לבין הויראליות שנוצרת בעקבותן.
-
-2.  האם קיימת התאמה בין מחירן של הפרסומות לבין הויראליות שנוצרת בעקבותן.
-
-------------------------------------------------------------------------
-
-\newpage
-
 <h1><u>שיטות</u></h1>
 
 אני כותב פה משהו חכם`r fn()`
@@ -110,32 +100,6 @@ ggplot(by_month, aes(x=month,y=hits)) +
 ```
 
 ```{r eval=FALSE, include=FALSE}
-by_month <- tibble(hits=as.numeric(NA),type=c(as.character(NA)),brand=c(as.character(NA))) %>%  na.omit()
-
-for (brand in c("E-Trade"))#brands$brand) 
-{
-  all <- gtopics(brand,"all") %>%
-  group_by(month=month(date))
-  
-  ad_years <- sapply(search_dates(brand), year)
-  
-  t <- tibble(brand=c(brand,brand),
-              type=c("NOT Sup month","Sup month"),
-              #hits=c(mean(filter(all,month!=2)$hits),mean(filter(all,month==2)$hits)))
-              hits=c(mean(filter(all,month!=2 |!(year(date) %in% ad_years))$hits),
-                     mean(filter(all,month==2, year(date) %in% ad_years)$hits)))
-              
-  by_month <- by_month %>% add_row(t)
-}
-
-
-```
-
-```{r}
-by_month
-```
-
-```{r eval=FALSE, include=FALSE}
 etrade_by_month <- gtopics("E-trade", "all") %>% 
   group_by(m=(month(date) == 2) & is_sup_year ) %>% 
   summarise(hits=mean(hits))
@@ -166,7 +130,7 @@ update_df <- function(df, brand, rday=3)
 { 
   for (y in seq(2004, 2020))
   {
-    output <- gtopics(brand, time=sprintf("%s-01-01 %s-12-31",y, y))
+    output <- gtopics(brand, time=sprintf("%s-01-01 %s-01-01",y, y+1))
     ad_date = search_dates(brand) %>% filter(year(date) == y)
    
     weeks <- rep(FALSE, nrow(output))
@@ -193,14 +157,16 @@ update_df <- function(df, brand, rday=3)
 ```
 
 ```{r}
-#for (brand in brands$brand) {df <- update_df(df, brand); Sys.sleep(6)}
-#df <- as.Date(df$date)
+for (brand in brands$brand) {df <- update_df(df, brand); Sys.sleep(6)}
+df$date <- as.Date(df$date)
+#write.csv(df,"data\\trends_data.csv", row.names = FALSE)
 ```
 
 ```{r}
 by_week <- df %>% 
   group_by(is_sup_week, brand) %>% 
   summarise(hits=mean(hits))
+
 by_week
 ggplot(data=by_week, aes(x=brand, y=hits, fill=as.character(is_sup_week), width=0.8)) +
   geom_bar(stat="identity", position=position_dodge())+
@@ -225,10 +191,18 @@ ggplot(data=by_month, aes(x=brand, y=hits, fill=m, width=0.8)) +
 hits_on_sup <- filter(df, is_sup_week==TRUE)$hits
 hits_not_on_sup <- filter(df, is_sup_week==FALSE)$hits
 
+hits_not_on_sup_year <- filter(df, is_sup_year==FALSE)$hits
 
 t.test(hits_on_sup, alternative = "greater", mu=75)
 
 t.test(hits_on_sup, sample(hits_not_on_sup, length(hits_on_sup)), alternative = "greater", paired = TRUE, var.equal = 0, mu=25)
+
+
+t.test(hits_on_sup, sample(hits_not_on_sup, length(hits_on_sup)), alternative = "greater", paired = FALSE, var.equal = 0, mu=25)
+
+
+t.test(hits_on_sup, sample(hits_not_on_sup_year, length(hits_on_sup)), alternative = "greater", paired = FALSE, var.equal = 0, mu=25)
+
 
 ```
 
@@ -285,7 +259,7 @@ weekk_after_sup <- filter(df, is_sup_week)$date + 7
 
 
 
-#
+#t_e <- read.csv("data\\trends_data.csv")
 #write.csv(df,"data\\trends_data.csv", row.names = FALSE)
 #data <- read.csv("data\\superbowl-ads.csv")
 #data <- data %>% select(-X)
