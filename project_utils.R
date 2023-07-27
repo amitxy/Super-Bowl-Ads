@@ -1,4 +1,6 @@
 library(tidyverse)
+library(gtrendsR)
+
 #library(docstring)
 fmt <- "%Y-%m-%d"
 
@@ -52,11 +54,12 @@ gtopics <- function(brands, time)
 {
   # the gtrends topics
   brands_topics <-topics$query[topics$brand %in% c(brands)]
+  #brands_topics <-topics$query[topics$brand == brand]
   trends <- gtrends(brands_topics,
                     geo = "US",
                     time=time,
                     onlyInterest = TRUE,
-                    low_search_volume = FALSE)$interest_over_time
+                    low_search_volume = TRUE)$interest_over_time
   
   # changes back from topic query to the brand name
   trends$keyword <- sapply(trends$keyword,
@@ -74,6 +77,52 @@ gtopics <- function(brands, time)
   return(trends)
   
 }
+
+update_df <- function(df, brand, rday=3)
+{ 
+  for (y in seq(2004, 2020))
+  {
+    output <- gtopics(brand, time=sprintf("%s-01-01 %s-01-01",y, y+1))
+    ad_date = search_dates(brand) %>% filter(year(date) == y)
+    
+    weeks <- rep(FALSE, nrow(output))
+    if (nrow(ad_date))
+    {
+      weeks <- sapply(output$date,
+                      function (date) {return((date <= ad_date + rday) & (date >= ad_date - rday))})
+    }
+    
+    
+    temp <- tibble(date=output$date,
+                   brand=output$keyword, 
+                   hits=output$hits,
+                   is_sup_week=weeks,
+                   is_sup_year=rep(as.logical(nrow(ad_date)),nrow(output))
+    )
+    
+    df <- df %>% add_row(temp)
+    
+  }
+  
+  return(df)
+}
+
+create_df <- function()
+{
+  df <- tibble(date=c(as.character(NA)),
+               brand=c(as.character(NA)),
+               hits=c(as.numeric(NA)), 
+               is_sup_week=c(as.logical(NA)),
+               is_sup_year=c(as.logical(NA))) %>% na.omit()
+  
+  for (brand in brands$brand) {df <- update_df(df, brand); Sys.sleep(6)}
+  
+  df$date <- as.Date(df$date)
+  write.csv(df,"data\\trends_data.csv", row.names = FALSE)
+}
+
+
+################## REMOVE ######################
 
 gtopics_r <- function(brands, date, rday=1)
 {
@@ -97,4 +146,3 @@ gtopics_plot <- function(brands, date, rday=1)
   
   gplot
 }
-
