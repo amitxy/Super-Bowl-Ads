@@ -7,17 +7,9 @@ output: html_document
 # settings
 knitr::opts_chunk$set(echo = TRUE)
 
-fn_count <<- 0
-rev_fn_count <<- 0
-
-fn <- function(){
-  fn_count <<- fn_count + 1
-  return(sprintf('<sup id="fnref:%d" role="doc-noteref"><a href="#fn:%d" class="footnote" rel="footnote">[%d]</a></sup>', fn_count, fn_count, fn_count))}
-
-rev_fn <- function() {
-  rev_fn_count <<- rev_fn_count + 1
-  return(sprintf('<a id="fn:%d" href="#fnref:%d" class="reversefootnote" role="doc-backlink">↩</a>',rev_fn_count,rev_fn_count))}
 ```
+
+קריאה לספריות העיקריות וקביעת סיד
 
 ```{r eval=TRUE, include=FALSE}
 library(tidyverse)
@@ -25,7 +17,7 @@ library(tidyverse)
 library(gtrendsR)
 #library("docstring")
 source("project_utils.R")
-
+set.seed(123)
 ```
 
 ```{=html}
@@ -39,28 +31,10 @@ source("project_utils.R")
     li {direction: rtl;}
 </style>
 ```
-<h1>עמוד שער</h1>
-
-<h1><u>מגישים</u></h1>
-
 ::: {style="border-bottom:solid"}
 :::
 
-<h1><u>תקציר</u></h1>
-
-\*אחרי שנסיים צריך לכתוב\*
-
-<h1><u>מבוא</u></h1>
-
-<h1><u>שיטות</u></h1>
-
-אני כותב פה משהו חכם`r fn()`
-
-[^1]גשדכדגכגד
-
-[^1]: וואלה וואלה
-
-<h1><u>תוצאות</u></h1>
+קריאה למאגרי נתונים שלנו
 
 ```{r getting data}
 fmt <- "%Y-%m-%d"
@@ -70,6 +44,97 @@ rating <- get_rating_data() # contains rating info, e.g., ads cost, viewrs and e
 general <- get_general_data() # ads categories, e.g., beer, car and etc 
 df <- read.csv("data\\trends_data.csv")
 ```
+
+## תוצאות
+
+### מבחן 1
+
+בדיקה האם יש קשר בין השבוע עם היטס 100 לשבוע הסופרבול כלומר אנחנו בודקים אם יש קשר בין השבוע בשנה שהיו בו הכי הרבה חיפושים לשבוע הסופרבול
+
+איך הגענו לטבלת השכיחות
+
+```{r message=TRUE, warning=TRUE}
+hits_on_sup <- filter(df, is_sup_week==TRUE)$hits
+freq_table  <- df %>% group_by(is_peak=hits==100, is_sup_week) %>% summarise(count=n())
+freq_table
+```
+
+בניית טבלת השכיחות וביצוע המבחן
+
+```{r}
+library("USP")
+
+freq <- cbind(c(sum(hits_on_sup == 100), sum(hits_on_sup != 100)),
+      c(sum(hits_not_on_sup == 100), sum(hits_not_on_sup != 100)))
+
+freq
+result <- USP.test(freq, B = 9999)
+result$p.value
+result$TestStat
+```
+
+### מבחן 2
+
+מבחן על התוחלת של ההיטס בשבוע שבו הייתה פרסומת בסופרבול
+
+```{r}
+t.test(hits_on_sup, alternative = "greater", mu=85)
+```
+
+### מבחן 3
+
+כאן אנחנו בודקים את הפרש התוחלות בין ההיטס בשבוע הסופרבול בין ההיטס בשבוע שהוא לא שבוע הסופרבול
+
+```{r}
+hits_not_on_sup <- filter(df, is_sup_week==FALSE)$hits
+t.test(hits_on_sup, hits_not_on_sup, alternative = "greater", paired = FALSE, var.equal = 0, mu=25)
+```
+
+### מבחן 4
+
+מגדם מזווג של ממוצע היטס בשנה של סופרבול ובשנה של לא סופרבול
+
+```{r message=FALSE, warning=FALSE}
+
+on_sup <- tibble(year=c(as.numeric(NA)),
+               brand=c(as.character(NA)),
+               hits=c(as.numeric(NA))) %>% na.omit()
+not_sup <- tibble(year=c(as.numeric(NA)),
+               brand=c(as.character(NA)),
+               hits=c(as.numeric(NA))) %>% na.omit()
+
+for (target_brand in brands$brand[-6]) 
+  {
+     
+      sup_years <- year(search_dates(target_brand)$date)
+      not_sup_years <- setdiff(2004:2020, year(search_dates(target_brand)$date))
+      n <- min(length(sup_years), length(not_sup_years))
+      
+      
+      means <- filter(df, brand==target_brand) %>% 
+        group_by(brand, year=year(date)) %>%
+        summarise(hits=mean(hits)) %>% ungroup()
+      
+      #on_sup <- on_sup %>% add_row(filter(means, year %in% sample(sup_years,n))) 
+      #not_sup <- not_sup %>% add_row(filter(means, year %in% sample(not_sup_years,n)))
+      for (i in 1:2)
+      {
+         on_sup <- on_sup %>% add_row(filter(means, year %in% sample(sup_years,n))) 
+          not_sup <- not_sup %>% add_row(filter(means, year %in% sample(not_sup_years,n))) 
+      }
+  }
+
+on_sup
+not_sup
+d <- sup$hits - not_sup$hits
+qqnorm(d)
+qqline(d)
+
+t.test(on_sup$hits,not_sup$hits, paired = TRUE)
+
+```
+
+## נספחים-גרפים
 
 ```{r}
 brands = unique(data['brand'])
@@ -84,12 +149,15 @@ ggplot(data=brand_q, aes(x=brand, y=count))+
 
 בדיקה על מותג מסוים בכל שנות הסופרבול
 
+להוריד כנראה
+
 ```{r}
 
-brand <-  "Doritos"
+name <-  "Doritos"
 dates <-  search_dates(brand)
 
-by_month <- gtopics("Doritos","all") %>%
+# Without norm
+by_month <- gtopics(name, "all") %>%
   group_by(month=month(date)) %>% 
   summarise(hits=mean(hits))
 
@@ -97,69 +165,23 @@ ggplot(by_month, aes(x=month,y=hits)) +
   geom_bar(stat="identity", position=position_dodge())+
  geom_text(aes(label=round(hits)), vjust=1.6, color="white",
             position = position_dodge(0.9), size=3.5)
-```
-
-```{r eval=FALSE, include=FALSE}
-etrade_by_month <- gtopics("E-trade", "all") %>% 
-  group_by(m=(month(date) == 2) & is_sup_year ) %>% 
-  summarise(hits=mean(hits))
 
 
-ggplot(etrade_by_month, aes(x=m,y=hits)) +
-  geom_bar(stat="identity", position=position_dodge())+
- geom_text(aes(label=round(hits)), vjust=1.6, color="white",
-            position = position_dodge(0.9), size=3.5)
-```
 
-על מנת לעבוד בצורה
-
-```{r eval=FALSE, include=FALSE}
-
-df <- tibble(date=c(as.character(NA)),
-             brand=c(as.character(NA)),
-             hits=c(as.numeric(NA)), 
-             is_sup_week=c(as.logical(NA)),
-             is_sup_year=c(as.logical(NA))) %>% na.omit()
-
-
-```
-
-```{r eval=FALSE, include=FALSE}
-
-update_df <- function(df, brand, rday=3)
-{ 
-  for (y in seq(2004, 2020))
-  {
-    output <- gtopics(brand, time=sprintf("%s-01-01 %s-01-01",y, y+1))
-    ad_date = search_dates(brand) %>% filter(year(date) == y)
-   
-    weeks <- rep(FALSE, nrow(output))
-    if (nrow(ad_date))
-    {
-       weeks <- sapply(output$date,
-                      function (date) {return((date <= ad_date + rday) & (date >= ad_date - rday))})
-    }
-  
-   
-      temp <- tibble(date=output$date,
-                     brand=output$keyword, 
-                     hits=output$hits,
-                     is_sup_week=weeks,
-                     is_sup_year=rep(as.logical(nrow(ad_date)),nrow(output))
-                    )
-   
-      df <- df %>% add_row(temp)
-
-    }
-   
-  return(df)
-}
 ```
 
 ```{r}
-for (brand in brands$brand) {df <- update_df(df, brand); Sys.sleep(6)}
-df$date <- as.Date(df$date)
-#write.csv(df,"data\\trends_data.csv", row.names = FALSE)
+
+# With norm 
+by_month <- filter(df,brand==name) %>%
+  group_by(month=month(date)) %>% 
+  summarise(hits=mean(hits))
+
+ggplot(by_month, aes(x=month,y=hits)) +
+  geom_bar(stat="identity", position=position_dodge())+
+ geom_text(aes(label=round(hits)), vjust=1.6, color="white",
+            position = position_dodge(0.9), size=3.5)
+
 ```
 
 ```{r}
@@ -185,45 +207,14 @@ ggplot(data=by_month, aes(x=brand, y=hits, fill=m, width=0.8)) +
   scale_fill_brewer(palette="Paired")
 ```
 
+בדיקת תלות
+
 ```{r}
-
-
-hits_on_sup <- filter(df, is_sup_week==TRUE)$hits
-hits_not_on_sup <- filter(df, is_sup_week==FALSE)$hits
-
-hits_not_on_sup_year <- filter(df, is_sup_year==FALSE)$hits
-
-t.test(hits_on_sup, alternative = "greater", mu=75)
-
-t.test(hits_on_sup, sample(hits_not_on_sup, length(hits_on_sup)), alternative = "greater", paired = TRUE, var.equal = 0, mu=25)
-
-
-t.test(hits_on_sup, sample(hits_not_on_sup, length(hits_on_sup)), alternative = "greater", paired = FALSE, var.equal = 0, mu=25)
-
-
-t.test(hits_on_sup, sample(hits_not_on_sup_year, length(hits_on_sup)), alternative = "greater", paired = FALSE, var.equal = 0, mu=25)
-
 
 ```
 
 ```{r}
-library("USP")
-on_sup <- filter(df, is_sup_week==TRUE)
-not_on_sup <- sample(filter(df, is_sup_week==FALSE), length(on_sup))
 
-samp = sample(hits_not_on_sup, length(hits_on_sup))
-freq = cbind(c(5, 13,32), c(13,9,28), c(20,3,27))
-p = 100
-
-# just to show what I did
-freq_table  <- df %>% group_by(is_peak=hits>=p, is_sup_week) %>% summarise(count=n())
-
-freq <- cbind(c(sum(hits_on_sup >= p), sum(hits_on_sup < p)),
-      c(sum(hits_not_on_sup >= p), sum(hits_not_on_sup < p)))
-
-freq_table
-freq
-USP.test(freq, B = 9999)$p.value
 ```
 
 ```{r}
@@ -250,6 +241,31 @@ print(t_test_result)
 #weeks_before_sup <- sapply(filter(df, is_sup_week)$date, function (d) {return(d - 7)})
 week_before_sup <- filter(df, is_sup_week)$date - 7
 weekk_after_sup <- filter(df, is_sup_week)$date + 7
+```
+
+```{r}
+
+ad_count <- data %>%
+  group_by(brand, year) %>%
+  summarise(count = n(), cost=sum(cost))
+ad_count$hits <- arrange(filter(df, is_sup_week == TRUE), brand)$hits
+ad_count
+```
+
+```{r}
+le_model <-  lm(data=ad_count, hits~count)
+summary(le_model)
+plot(le_model)
+```
+
+```{r}
+n = 5000
+samp_size <- 50
+samples <- c()
+for (i in 1:n) {samples[i] = mean(sample(df$hits, samp_size))}
+hist(samples)
+qqnorm(samples)
+qqline(samples)
 ```
 
 ```{r}
