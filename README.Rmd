@@ -105,10 +105,16 @@ tibble(date=c(as.character(NA)),
 
 ואז אנחנו משתמשים בפונקציה update_df על מנת לעבור על כל המותגים ולעדכן אותם בדאטה פריים שלנו
 
--   <code></code>
+-   חישוב עלות הפרסומת
 
     rand name to the relevant topic)
 
 ```{r}
-#gtopics_r(brands=brands_to_compare, date=dates[2,], rday=1)
+ads_cost <- sapply(data$year,
+               function (y) { 
+                 return(filter(rating,year==y)$cost_of_30_second_ad_usd)
+               })
+
+data <- data %>% mutate(cost= round(duration * (ads_cost / 30)))
+
 ```
