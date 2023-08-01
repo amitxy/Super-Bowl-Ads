@@ -1,11 +1,12 @@
 library(tidyverse)
 library(gtrendsR)
 
-#library(docstring)
 fmt <- "%Y-%m-%d"
 
 topics <- read.csv("data\\brand_topics.csv")
-
+ads <- get_data()
+trends <- read.csv("data\\trends_data.csv")
+z <- DATA_SETUP(ads = ads,trends = trends)
 
 get_data <- function()
 {
@@ -19,13 +20,6 @@ get_rating_data <- function()
     mutate(year=year(date), date=as.Date(date)) %>% 
     filter(year > 2003)
   return(rating)
-}
-
-get_general_data <- function()
-{
-  general <- read.csv("data\\superbowl-ads-general.csv") %>% 
-    filter(!is.na(suppressWarnings(as.numeric(Year))), Year > 2003)
-  return(general)
 }
 
 # Returns the dates where a brand had a commercial  
@@ -50,6 +44,8 @@ search_brands <- function(ad_year)
   return(brands)
 }
 
+# Works like the gtrends function, we used it to retrive the data
+# from google
 gtopics <- function(brands, time)
 {
   # the gtrends topics
@@ -78,6 +74,7 @@ gtopics <- function(brands, time)
   
 }
 
+# Here we take the data from google and apply it in our dataframe
 update_df <- function(df, brand, rday=3)
 { 
   for (y in seq(2004, 2020))
@@ -107,6 +104,7 @@ update_df <- function(df, brand, rday=3)
   return(df)
 }
 
+# This is how we created our main data frame with the data
 create_df <- function()
 {
   df <- tibble(date=c(as.character(NA)),
@@ -121,28 +119,44 @@ create_df <- function()
   write.csv(df,"data\\trends_data.csv", row.names = FALSE)
 }
 
-
-################## REMOVE ######################
-
-gtopics_r <- function(brands, date, rday=1)
-{
-  time_q <- paste(date - rday, date + rday)
-  return(gtopics(brands, time_q))
+#setting up the data sets
+DATA_SETUP <- function(ads,trends) {
+  ads <- na.exclude(ads)
+  ads <- ads %>% filter(cost!=0,year>=2004)
+  cost_table <- ads%>%group_by(brand,year)%>%summarise(sum_of_ads=sum(cost))
+  trends$X<-as.integer(rownames(trends))
+  trends$hits[trends$hits==0] <-0.001 
+  z<- trends%>%
+    summarise(brand=brand[is_sup_week==T],
+              ratio=hits[X[is_sup_week==T]]/hits[X[is_sup_week==T]-1],
+              dates=paste(date[(X[trends$is_sup_week==T]-1)],date[X[is_sup_week==T]],sep = "--"))%>%
+    mutate(year=year(dates))
+  #merging the ads' cost with the ratio
+  z$ad_cost <-vector(length = length(z$ratio)) 
+  for (i in 1:114) {
+    z$ad_cost[i] <-  cost_table$sum_of_ads[(cost_table$brand==z$brand[i])&cost_table$year==z$year[i]]
+  }
+  return(z)
 }
 
-# rday - how many days to display before and after date 
-gtopics_plot <- function(brands, date, rday=1)
-{
-  trends <- gtopics_r(brands, date, rday)
+#calculating robust coefficients
+TukeyLine <- function(x, y) { 
+  ### split into quantiles 
+  quants   <- quantile(x, c(1/3, 2/3), type = 6)  
+  y_anchor <- c(median(y[x <= quants[1]]), median(y[x > quants[2]]))
+  x_anchor <- c(median(x[x <= quants[1]]), median(x[x > quants[2]]))
+  ## find the line 
+  beta1  <- (y_anchor[2] - y_anchor[1]) / (x_anchor[2] - x_anchor[1]) 
+  beta0  <- median(y - beta1 * x)
+  return(c(beta0, beta1))
+}
+robust_coef<- TukeyLine(z$ad_cost,z$ratio)
+
+#least squares model and robust model plot
+linear.model.plot <- function(x,y,LS.model,Robust.model) {
+  plot(y = (y),x = (x),main = "Search ratio VS Ads cost",xlab = "Ad cost",ylab = "Search ratio",las=1)
+  abline(a = coefficients(LS.model)[1],b = coefficients(LS.model)[2],col="red")
+  abline(a=Robust.model[1],b=Robust.model[2],col="purple")
+  legend("topright",legend = c("Least squares","Robust line"),col = c("red","purple"),lty =1 )
   
-  hits <-  trends$hits
-  date <-  as.Date(trends$date)
-  
-  gplot <- ggplot(trends, aes(x=as.Date(date) ,y=hits, colour=keyword)) +
-    geom_line(na.rm = TRUE) +
-    geom_vline(xintercept=date[rday + 1],linetype = "dashed") + 
-    xlab("Date") +
-    ylab("Search hits")
-  
-  gplot
 }
