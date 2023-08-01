@@ -41,11 +41,65 @@ fmt <- "%Y-%m-%d"
 
 data <- get_data() # the main dataset, contains ads info
 rating <- get_rating_data() # contains rating info, e.g., ads cost, viewrs and etc
-general <- get_general_data() # ads categories, e.g., beer, car and etc 
 df <- read.csv("data\\trends_data.csv")
+brands = unique(data['brand'])
 ```
 
 ## תוצאות
+
+## התאמה ליניארית
+
+כאן אנחנו יוצרים את מודל הריבועים הפחותים ואת הקו החסין ןגם מחשבים את מקדם המתאם של פירסון של המודל הלינארי, בנוסף אנו יוצרים תרשים של המודל ותרשים שאריות נפרד לכל גרף
+
+```{r message=FALSE, warning=FALSE}
+
+#generating the least squares linear model in R
+le_model <- lm(ratio~ad_cost,data = z)
+summary(le_model)
+
+#finding Pearson's coefficient
+(Pearsons_coeff <- cor( x= z$ad_cost,y = z$ratio))
+
+#calculating robust coefficients
+robust_coef<- TukeyLine(z$ad_cost,z$ratio)
+
+linear.model.plot(z$ad_cost,z$ratio,le_model,robust_coef)
+
+#least squares residual plot
+plot(x =z$ad_cost,y = le_model$residuals,main = "least squares model residuals plot",xlab = "Ad cost",ylab = "residuals",las=1)
+abline(h=0,col="red")
+
+#robust line residual plot
+robust_resid <- z$ratio-(robust_coef[1]+robust_coef[2]*z$ad_cost)
+plot(x =z$ad_cost,y =robust_resid ,main = "robust line model residuals plot",xlab = "Ad cost",ylab = "residuals",las=1)
+abline(h=0,col="red")
+
+
+```
+
+כאן אנחנו יוצרים מודלים לינארי עם טרנספורמציית לוג על המשתנה המסביר, מחשבים את מקדם פירסון עבור המודל עם הטרנספורמציה ויוצרים תרשימי שאריות עבור הקו החסין וקו הריבועים הפחותים
+
+```{r}
+#generating the log model
+le_model_log <- lm(ratio~log(ad_cost),data = z)
+summary(le_model_log)
+(Pearsons_coeff_log <- cor(x = log(z$ad_cost),y = z$ratio))
+
+#logarithm transformation models plot
+robust_coef_log<- TukeyLine(log(z$ad_cost),z$ratio)
+plot(y = z$ratio,x = log(z$ad_cost),main = "Search ratio VS log(Ads cost)",xlab = "Ad cost",ylab = "Search ratio",las=1)
+abline(a=coefficients(le_model_log)[1],b =coefficients(le_model_log)[2],col="red")
+abline(a=robust_coef_log[1],b=robust_coef_log[2],col="purple")
+legend("topright",legend = c("Least squares","Robust line"),col = c("red","purple"),lty =1 )
+
+#log transformation residuals
+plot(x =log(z$ad_cost),y = le_model_log$residuals,main = "least squares log model residuals plot",xlab = "Ad cost",ylab = "residuals",las=1)
+abline(h=0,col="red")
+robust_resid_log <- z$ratio-(robust_coef_log[1]+robust_coef_log[2]*log(z$ad_cost))
+plot(x =log(z$ad_cost),y =robust_resid_log ,main = "robust line log model residuals plot",xlab = "Ad cost",ylab = "residuals",las=1)
+abline(h=0,col="red")
+
+```
 
 ### מבחן 1
 
@@ -55,6 +109,8 @@ df <- read.csv("data\\trends_data.csv")
 
 ```{r message=TRUE, warning=TRUE}
 hits_on_sup <- filter(df, is_sup_week==TRUE)$hits
+hits_not_on_sup <- filter(df, is_sup_week==FALSE)$hits
+
 freq_table  <- df %>% group_by(is_peak=hits==100, is_sup_week) %>% summarise(count=n())
 freq_table
 ```
@@ -80,71 +136,30 @@ result$TestStat
 ```{r}
 set.seed(SEED)
 t.test(hits_on_sup)$conf.int
-t.test(sample(hits_not_on_sup, 100))$conf.int
-
 samp <- sample(hits_not_on_sup, 100)
+t.test(samp)$conf.int
+
+# To show that our sample is roughly normally distributed 
+
 qqnorm(samp)
 qqline(samp)
-```
 
-```{r}
-week_before_sup <- as.Date(filter(df, is_sup_week)$date) - 7
-week_after_sup <- as.Date(filter(df, is_sup_week)$date) + 7
-before_sup <- df %>% filter(is_sup_year, date %in% week_before_sup)
-after_sup <- df %>% filter(is_sup_year, date %in% week_after_sup)
-
-t.test(hits_on_sup, alternative = "greater", mu=85)
-t.test(after_sup$hits, before_sup$hits , alternative = "less", paired = T)
-
-samp <- runif(length(hits_on_sup), min = min(hits_on_sup), max=100)
-
-qqnorm(log(abs(hits_on_sup - before_sup$hits)+1))
-qqline(log(abs(hits_on_sup - before_sup$hits)+1))
-qqnorm(after_sup$hits - before_sup$hits)
-qqline(after_sup$hits - before_sup$hits)
-
-
-```
-
-```{r}
-df %>% filter(is_sup_year, date %in% week_before_sup)
-t.test(hits_on_sup)
-mean(hits_on_sup) - qt(0.975,113)*(sd(hits_on_sup)/sqrt(114))
-mean(hits_on_sup) + qt(0.975,113)*(sd(hits_on_sup)/sqrt(114))
-t.test(sample(hits_not_on_sup,500))
-n <-  50
-t_q <- qt(0.975,df=n-1)
-samp <- sample(hits_on_sup, n)
-se <-  sd(samp)/sqrt(n)
-mean(samp) + 1.96*se
-mean(samp) - 1.96*se
-margin <- se*t_q
-se
-margin
-mean(samp) + margin
-mean(samp) - margin
-t.test(samp)
 ```
 
 ### מבחן 2
 
 כאן אנחנו בודקים את הפרש התוחלות בין ההיטס בשבוע הסופרבול בין ההיטס בשבוע שהוא לא שבוע הסופרבול
 
-```{r}
+```{r warning=FALSE}
 set.seed(SEED)
-hits_not_on_sup <- filter(df, is_sup_week==FALSE)$hits
+
 samp <- sample(hits_not_on_sup, 300)
-samp
-t.test(hits_on_sup, samp, alternative = "greater", paired = FALSE, var.equal = 0, mu=0)
 t.test(hits_on_sup, samp, alternative = "greater", paired = FALSE,var.equal = 0, mu=25)
 
-d <- hits_on_sup - sample(hits_not_on_sup, 300)
+# Show that the differences are normally distributed
+d <- hits_on_sup - samp
 qqnorm(d)
 qqline(d)
-n <- length(hits_on_sup- hits_not_on_sup)
-m <- mean(hits_on_sup- hits_not_on_sup)
-wilcox.test(d)
-
 ```
 
 ### מבחן 4
@@ -153,7 +168,7 @@ wilcox.test(d)
 
 נבנה דאטהפריימ מתאים
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 
 on_sup <- tibble(year=c(as.numeric(NA)),
                brand=c(as.character(NA)),
@@ -166,15 +181,18 @@ not_sup <- tibble(year=c(as.numeric(NA)),
 
 for (target_brand in brands$brand) 
   {
-     
-      sup_years <- sort(year(search_dates(target_brand)$date), decreasing = T)
-      not_sup_years <- sort(setdiff(2004:2020,year(search_dates(target_brand)$date)), decreasing = T)
+  
+      sup_years <- year(search_dates(target_brand)$date)
+      not_sup_years <- setdiff(2004:2020,year(search_dates(target_brand)$date))
       
       n <- min(length(sup_years), length(not_sup_years))
+      # the yearly mean hits value
       means <- filter(df, brand==target_brand) %>% 
         group_by(brand, year=year(date)) %>%
         summarise(hits=mean(hits)) %>% ungroup()
       
+      # Here we ensure that on_sup receives only superbowl years values
+      # and similarly about not sup 
       on_sup <- on_sup %>% add_row(means[sup_years[1:n]- 2004 + 1,]) 
       not_sup <- not_sup %>% add_row(means[not_sup_years[1:n] - 2004 + 1,])
      
@@ -184,105 +202,32 @@ for (target_brand in brands$brand)
 
 ```
 
-מהתרשים ההפרשים בהתאם להנחות עבר שלנו (דגימות משנים קודמות בלתי תלויות) אפשר לראות כי ההפרשים מתפלגים בקירוב נורמלי והמבחן מזווג לא נדחה את השארת האפס
+מהתרשים ההפרשים בהתאם להנחות עבר שלנו (דגימות משנים קודמות בלתי תלויות) אפשר לראות כי ההפרשים מתפלגים בקירוב נורמלי ובמבחן המזווג לא נדחה את השארת האפס
 
 ```{r message=FALSE, warning=FALSE}
 
-d <- sup$hits - not_sup$hits
-qqnorm(d)
-qqline(d)
-
 t.test(on_sup$hits,not_sup$hits, paired = TRUE)
 
+d <- on_sup$hits - not_sup$hits
+qqnorm(d)
+qqline(d)
 ```
 
 ## נספחים-גרפים
 
 ```{r}
-brands = unique(data['brand'])
-brand_q <- data %>%
-  group_by(brand) %>%
-  summarise(count = n())
-
-ggplot(data=brand_q, aes(x=brand, y=count))+
-  geom_bar(stat = 'identity')
-
-```
-
-בדיקה על מותג מסוים בכל שנות הסופרבול
-
-להוריד כנראה
-
-```{r}
-
-name <-  "Doritos"
-dates <-  search_dates(brand)
-
-# Without norm
-by_month <- gtopics(name, "all") %>%
-  group_by(month=month(date)) %>% 
-  summarise(hits=mean(hits))
-
-ggplot(by_month, aes(x=month,y=hits)) +
-  geom_bar(stat="identity", position=position_dodge())+
- geom_text(aes(label=round(hits)), vjust=1.6, color="white",
-            position = position_dodge(0.9), size=3.5)
-
-
-
-```
-
-```{r}
-
-# With norm 
-by_month <- filter(df,brand==name) %>%
-  group_by(month=month(date)) %>% 
-  summarise(hits=mean(hits))
-
-ggplot(by_month, aes(x=month,y=hits)) +
-  geom_bar(stat="identity", position=position_dodge())+
- geom_text(aes(label=round(hits)), vjust=1.6, color="white",
-            position = position_dodge(0.9), size=3.5)
-
-```
-
-```{r}
 by_week <- df %>% 
   group_by(is_sup_week, brand) %>% 
-  summarise(hits=mean(hits))
+  summarise(mean_hits=mean(hits))
 
-by_week
-ggplot(data=by_week, aes(x=brand, y=hits, fill=as.character(is_sup_week), width=0.8)) +
+ggplot(data=by_week, aes(x=brand, y=mean_hits, fill=as.character(is_sup_week), width=0.8)) +
   geom_bar(stat="identity", position=position_dodge())+
+  labs(title="גרף ערכי החיפוש השבועי הממוצע בשבוע הסופרבול לעומת שבוע לא סופרבול", x="חברה", y="  שבועי ממוצע hits ערך", fill="שבוע סופרבול") +
   scale_fill_brewer(palette="Paired")+
   theme_minimal()
 ```
 
-```{r}
-by_month <- df %>% 
-  group_by(brand, m=(month(date) == 2) & is_sup_year ) %>% 
-  summarise(hits=mean(hits))
-
-by_month
-ggplot(data=by_month, aes(x=brand, y=hits, fill=m, width=0.8)) +
-  geom_bar(stat="identity", position=position_dodge())+
-  scale_fill_brewer(palette="Paired")
-```
-
-```{r}
-
-ad_count <- data %>%
-  group_by(brand, year) %>%
-  summarise(count = n(), cost=sum(cost))
-ad_count$hits <- arrange(filter(df, is_sup_week == TRUE), brand)$hits
-ad_count
-```
-
-```{r}
-le_model <-  lm(data=ad_count, hits~count)
-summary(le_model)
-plot(le_model)
-```
++סימולציה להנחת הנורמליות
 
 תרשים שאריות שמראים שהממוצע ההיטס אכן מתפלג נורמלית
 
