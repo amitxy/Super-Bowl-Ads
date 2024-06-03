@@ -1,7 +1,7 @@
-README !
-================
-
 # Super-Bowl-Ads
+
+# **[Click HERE to read the final report](Project%20Report.pdf)**
+
 
 # Usage and examples of project_utils package
 
